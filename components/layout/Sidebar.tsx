@@ -2,9 +2,9 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState, useEffect, useMemo } from "react";
+import { useState, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Search, ChevronDown, ChevronRight, CheckCircle2, X } from "lucide-react";
+import { Search, ChevronDown, CheckCircle2, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import type { Course } from "@/lib/types";
 
@@ -14,7 +14,7 @@ interface Props {
   onToggleComplete: (lessonSlug: string) => void;
 }
 
-export default function Sidebar({ course, completedLessons, onToggleComplete }: Props) {
+export default function Sidebar({ course, completedLessons }: Props) {
   const pathname = usePathname();
   const [search, setSearch] = useState("");
   const [collapsed, setCollapsed] = useState<Record<string, boolean>>({});
@@ -35,141 +35,170 @@ export default function Sidebar({ course, completedLessons, onToggleComplete }: 
   }, [search, course.groups]);
 
   const totalLessons = course.groups.reduce((acc, g) => acc + g.lessons.length, 0);
-  const progress = totalLessons > 0 ? Math.round((completedLessons.length / totalLessons) * 100) : 0;
+  const doneLessons = completedLessons.length;
+  const progress = totalLessons > 0 ? (doneLessons / totalLessons) * 100 : 0;
 
   return (
-    <aside
-      className="flex flex-col h-full"
-      style={{ width: "var(--sidebar-width)", background: "var(--background)" }}
-    >
-      {/* Course header */}
-      <div className="p-4 border-b shrink-0" style={{ borderColor: "var(--border)" }}>
-        <div className="flex items-center gap-2 mb-3">
-          <span className="text-xl">{course.icon}</span>
+    <aside className="sb-root">
+      {/* ── Header ─────────────────────────── */}
+      <div className="sb-head">
+        <div className="sb-head-top">
+          <span className="sb-head-icon">{course.icon}</span>
           <div>
-            <div className="font-bold text-sm" style={{ color: "var(--foreground)" }}>
-              {course.title} Kursi
-            </div>
-            <div className="text-xs" style={{ color: "var(--muted-foreground)" }}>
-              {completedLessons.length}/{totalLessons} dars bajarildi
-            </div>
+            <p className="sb-head-title">{course.title}</p>
+            <p className="sb-head-sub">
+              <span style={{ color: "var(--primary)" }}>{doneLessons}</span>
+              /{totalLessons} bajarildi
+            </p>
           </div>
         </div>
 
-        {/* Progress bar */}
-        <div className="h-1.5 rounded-full overflow-hidden" style={{ background: "var(--muted)" }}>
-          <motion.div
-            className="h-full rounded-full"
-            style={{ background: "var(--primary)" }}
-            initial={{ width: 0 }}
-            animate={{ width: `${progress}%` }}
-            transition={{ duration: 0.5, ease: "easeOut" }}
-          />
-        </div>
-        <div className="text-xs mt-1 text-right" style={{ color: "var(--muted-foreground)" }}>
-          {progress}%
+        {/* Progress */}
+        <div className="sb-progress">
+          <div className="sb-progress-track">
+            <motion.div
+              className="sb-progress-fill"
+              initial={{ width: 0 }}
+              animate={{ width: `${progress}%` }}
+              transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+            />
+          </div>
+          <span className="sb-progress-label">{Math.round(progress)}%</span>
         </div>
       </div>
 
-      {/* Search */}
-      <div className="px-3 py-2 shrink-0 border-b" style={{ borderColor: "var(--border)" }}>
-        <div className="relative">
-          <Search
-            size={14}
-            className="absolute left-2.5 top-1/2 -translate-y-1/2"
-            style={{ color: "var(--muted-foreground)" }}
-          />
+      {/* ── Search ─────────────────────────── */}
+      <div className="sb-search-wrap">
+        <div className="sb-search-box">
+          <Search size={13} className="sb-search-ico" strokeWidth={2} />
           <input
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            placeholder="Darslarni qidirish..."
-            className="w-full text-sm pl-8 pr-8 py-1.5 rounded-md outline-none"
-            style={{
-              background: "var(--muted)",
-              color: "var(--foreground)",
-              border: "1px solid var(--border)",
-            }}
+            placeholder="Dars qidirish..."
+            className="sb-search-inp"
+            spellCheck={false}
           />
-          {search && (
-            <button
-              onClick={() => setSearch("")}
-              className="absolute right-2 top-1/2 -translate-y-1/2"
-              style={{ color: "var(--muted-foreground)" }}
-            >
-              <X size={13} />
-            </button>
-          )}
+          <AnimatePresence>
+            {search && (
+              <motion.button
+                initial={{ opacity: 0, scale: 0.6 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.6 }}
+                transition={{ duration: 0.12 }}
+                onClick={() => setSearch("")}
+                className="sb-search-clear"
+                aria-label="Tozalash"
+              >
+                <X size={11} strokeWidth={2.5} />
+              </motion.button>
+            )}
+          </AnimatePresence>
         </div>
       </div>
 
-      {/* Lessons list */}
-      <nav className="flex-1 overflow-y-auto py-2">
+      {/* ── Lesson list ────────────────────── */}
+      <nav className="sb-nav" aria-label="Darslar">
         {filtered.length === 0 && (
-          <div className="px-4 py-8 text-center text-sm" style={{ color: "var(--muted-foreground)" }}>
-            Hech narsa topilmadi
-          </div>
+          <p className="sb-empty">Topilmadi</p>
         )}
+
         {filtered.map((group) => {
-          const isCollapsed = collapsed[group.title];
+          const isOpen = !collapsed[group.title];
+          const groupTotal = group.lessons.length;
+          const groupDone = group.lessons.filter((l) =>
+            completedLessons.includes(l.slug)
+          ).length;
+
           return (
-            <div key={group.title} className="mb-1">
+            <div key={group.title} className="sb-group">
               {/* Group header */}
               <button
+                className="sb-group-hd"
                 onClick={() =>
-                  setCollapsed((prev) => ({ ...prev, [group.title]: !prev[group.title] }))
+                  setCollapsed((p) => ({ ...p, [group.title]: isOpen }))
                 }
-                className="w-full flex items-center justify-between px-4 py-1.5 text-xs font-semibold uppercase tracking-wider transition-colors"
-                style={{ color: "var(--muted-foreground)" }}
+                aria-expanded={isOpen}
               >
-                <span>{group.title}</span>
-                {isCollapsed ? <ChevronRight size={13} /> : <ChevronDown size={13} />}
+                <span className="sb-group-name">{group.title}</span>
+                <span className="sb-group-badge">
+                  {groupDone > 0 && (
+                    <span className="sb-group-done-ct">{groupDone}/</span>
+                  )}
+                  {groupTotal}
+                </span>
+                <motion.span
+                  animate={{ rotate: isOpen ? 0 : -90 }}
+                  transition={{ duration: 0.2 }}
+                  className="sb-group-arrow"
+                >
+                  <ChevronDown size={12} strokeWidth={2.5} />
+                </motion.span>
               </button>
 
+              {/* Lessons */}
               <AnimatePresence initial={false}>
-                {!isCollapsed && (
+                {isOpen && (
                   <motion.div
                     initial={{ height: 0, opacity: 0 }}
                     animate={{ height: "auto", opacity: 1 }}
                     exit={{ height: 0, opacity: 0 }}
-                    transition={{ duration: 0.18 }}
-                    className="overflow-hidden"
+                    transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
+                    style={{ overflow: "hidden" }}
                   >
-                    {group.lessons.map((lesson) => {
-                      const href = `/kurs/${course.slug}/${lesson.slug}`;
-                      const isActive = pathname === href;
-                      const isDone = completedLessons.includes(lesson.slug);
+                    <ul className="sb-lesson-list">
+                      {group.lessons.map((lesson, idx) => {
+                        const href = `/kurs/${course.slug}/${lesson.slug}`;
+                        const isActive = pathname === href;
+                        const isDone = completedLessons.includes(lesson.slug);
 
-                      return (
-                        <motion.div
-                          key={lesson.id}
-                          whileHover={{ x: 2 }}
-                          transition={{ duration: 0.1 }}
-                        >
-                          <Link
-                            href={href}
-                            className={cn(
-                              "flex items-center gap-2 px-4 py-2 text-sm transition-all rounded-md mx-1",
-                              isActive
-                                ? "font-semibold"
-                                : "hover:bg-[var(--muted)]"
-                            )}
-                            style={
-                              isActive
-                                ? {
-                                    background: "var(--primary-light)",
-                                    color: "var(--primary)",
-                                  }
-                                : { color: "var(--muted-foreground)" }
-                            }
-                          >
-                            <span className="flex-1 leading-snug">{lesson.title}</span>
-                            {isDone && (
-                              <CheckCircle2 size={14} style={{ color: "var(--success)", flexShrink: 0 }} />
-                            )}
-                          </Link>
-                        </motion.div>
-                      );
-                    })}
+                        return (
+                          <li key={lesson.id} className="sb-lesson-item">
+                            <Link
+                              href={href}
+                              className={cn(
+                                "sb-lesson",
+                                isActive && "sb-lesson--active",
+                                isDone && !isActive && "sb-lesson--done"
+                              )}
+                            >
+                              {isActive && (
+                                <motion.span
+                                  layoutId="sb-active"
+                                  className="sb-lesson-bg"
+                                  transition={{ type: "spring", stiffness: 480, damping: 42 }}
+                                />
+                              )}
+
+                              {/* Status indicator */}
+                              <span className="sb-lesson-status">
+                                {isDone ? (
+                                  <CheckCircle2
+                                    size={13}
+                                    className="sb-done-icon"
+                                    strokeWidth={2}
+                                  />
+                                ) : (
+                                  <span
+                                    className={cn(
+                                      "sb-lesson-num",
+                                      isActive && "sb-lesson-num--active"
+                                    )}
+                                  >
+                                    {idx + 1}
+                                  </span>
+                                )}
+                              </span>
+
+                              <span className="sb-lesson-text">{lesson.title}</span>
+
+                              {isActive && (
+                                <span className="sb-active-bar" aria-hidden />
+                              )}
+                            </Link>
+                          </li>
+                        );
+                      })}
+                    </ul>
                   </motion.div>
                 )}
               </AnimatePresence>

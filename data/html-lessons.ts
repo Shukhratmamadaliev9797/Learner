@@ -1410,7 +1410,6 @@ export const htmlCourse: Course = {
           description: "Qidiruv tizimi optimallashtirish uchun HTML",
           sections: [
             { id: "meta-teglar", title: "Meta teglar" },
-            { id: "og-tags", title: "Open Graph teglar" },
           ],
           content: `
 <h1>SEO asoslari</h1>
@@ -1424,15 +1423,6 @@ export const htmlCourse: Course = {
   <li><code>canonical</code> — asosiy URL (nusxa sahifalar uchun)</li>
   <li><code>lang</code> atributi — sahifa tili</li>
 </ul>
-
-<h2 id="og-tags">Open Graph teglar</h2>
-<p>Ijtimoiy tarmoqlarda (Telegram, Facebook) sahifa ulashilganda ko'rinadigan ma'lumotlar:</p>
-<ul>
-  <li><code>og:title</code> — sarlavha</li>
-  <li><code>og:description</code> — tavsif</li>
-  <li><code>og:image</code> — rasm</li>
-  <li><code>og:url</code> — URL</li>
-</ul>
           `,
           codeExample: {
             title: "SEO uchun head bo'limi",
@@ -1441,24 +1431,12 @@ export const htmlCourse: Course = {
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <!-- Asosiy SEO -->
   <title>HTML Kursi - Learner.uz | Bepul Online Ta'lim</title>
   <meta name="description"
     content="Learner.uz da HTML ni o'zbek tilida bepul o'rganing.
     Interaktiv darslar, amaliy mashqlar va real loyihalar." />
   <meta name="keywords" content="HTML, web dasturlash, o'zbek, kurs" />
   <link rel="canonical" href="https://learner.uz/html" />
-
-  <!-- Open Graph -->
-  <meta property="og:title" content="HTML Kursi - Learner.uz" />
-  <meta property="og:description"
-    content="HTML ni o'zbek tilida bepul o'rganing" />
-  <meta property="og:image" content="https://learner.uz/og-image.png" />
-  <meta property="og:url" content="https://learner.uz/html" />
-  <meta property="og:type" content="website" />
-
-  <!-- Twitter Card -->
-  <meta name="twitter:card" content="summary_large_image" />
 </head>`,
           },
           liveEditorDefault: `<!DOCTYPE html>
@@ -1483,7 +1461,7 @@ export const htmlCourse: Course = {
             "meta keywords ga haddan tashqari ko'p kalit so'z qo'shish (spam hisoblangan)",
           ],
           practiceTask:
-            "Xayoliy veb-sayt uchun to'liq head bo'limini yozing: title, description, og teglar, canonical.",
+            "Xayoliy veb-sayt uchun to'liq head bo'limini yozing: title, description, canonical va meta robots.",
           quiz: [
             {
               question: "SEO title nechi belgigacha bo'lishi optimal?",
@@ -1792,6 +1770,1773 @@ export const htmlCourse: Course = {
               correct: 1,
               explanation:
                 "Shaxsiy ma'lumotlarni (email, xabar) yuborish uchun POST method xavfsizroq.",
+            },
+          ],
+        },
+      ],
+    },
+    {
+      title: "Blok va Inline elementlar",
+      lessons: [
+        {
+          id: "html-block-inline",
+          slug: "blok-inline",
+          title: "Blok va Inline elementlar",
+          description: "div, span va elementlar turi haqida",
+          sections: [
+            { id: "blok", title: "Blok elementlar" },
+            { id: "inline", title: "Inline elementlar" },
+            { id: "div-span", title: "div va span" },
+          ],
+          content: `
+<h1>Blok va Inline elementlar</h1>
+<p>HTML elementlari ikkita asosiy ko'rinish turiga bo'linadi: <strong>blok</strong> va <strong>inline</strong>. Bu farqni bilish sahifa maketini tushunish uchun juda muhim.</p>
+
+<h2 id="blok">Blok elementlar</h2>
+<p>Blok elementlar:</p>
+<ul>
+  <li>Yangi qatordan boshlanadi</li>
+  <li>Mavjud kenglikning to'liq enini egallaydi</li>
+  <li>Ichiga blok ham, inline ham joylashtiriladi</li>
+</ul>
+<p>Asosiy blok elementlar: <code>&lt;div&gt;</code>, <code>&lt;p&gt;</code>, <code>&lt;h1&gt;–&lt;h6&gt;</code>, <code>&lt;ul&gt;</code>, <code>&lt;ol&gt;</code>, <code>&lt;li&gt;</code>, <code>&lt;table&gt;</code>, <code>&lt;form&gt;</code>, <code>&lt;header&gt;</code>, <code>&lt;main&gt;</code>, <code>&lt;section&gt;</code>, <code>&lt;article&gt;</code>, <code>&lt;footer&gt;</code>, <code>&lt;nav&gt;</code>, <code>&lt;aside&gt;</code>, <code>&lt;blockquote&gt;</code>, <code>&lt;pre&gt;</code>, <code>&lt;hr&gt;</code></p>
+
+<h2 id="inline">Inline elementlar</h2>
+<p>Inline elementlar:</p>
+<ul>
+  <li>Yangi qatordan boshlanmaydi — matn oqimida davom etadi</li>
+  <li>Faqat kontent kengligini egallaydi</li>
+  <li>Ichiga faqat inline elementlar joylashtirilishi kerak</li>
+</ul>
+<p>Asosiy inline elementlar: <code>&lt;span&gt;</code>, <code>&lt;a&gt;</code>, <code>&lt;strong&gt;</code>, <code>&lt;em&gt;</code>, <code>&lt;img&gt;</code>, <code>&lt;br&gt;</code>, <code>&lt;code&gt;</code>, <code>&lt;label&gt;</code>, <code>&lt;input&gt;</code>, <code>&lt;button&gt;</code>, <code>&lt;select&gt;</code>, <code>&lt;textarea&gt;</code>, <code>&lt;abbr&gt;</code>, <code>&lt;cite&gt;</code>, <code>&lt;q&gt;</code>, <code>&lt;sup&gt;</code>, <code>&lt;sub&gt;</code></p>
+
+<h2 id="div-span">div va span — universal konteynerlar</h2>
+<p><code>&lt;div&gt;</code> — semantik ma'nosi yo'q <strong>blok</strong> konteyner. CSS bilan ishlash va guruhlashtirish uchun.</p>
+<p><code>&lt;span&gt;</code> — semantik ma'nosi yo'q <strong>inline</strong> konteyner. Matn ichida qismni ajratish uchun.</p>
+          `,
+          codeExample: {
+            title: "Blok va inline farqi",
+            language: "html",
+            code: `<!-- Blok elementlar — har biri yangi qatorda -->
+<div>Bu birinchi div (blok)</div>
+<div>Bu ikkinchi div (blok)</div>
+<p>Bu paragraf (blok)</p>
+
+<!-- Inline elementlar — bir qatorda -->
+<span>Birinchi</span>
+<span>Ikkinchi</span>
+<a href="#">Havola</a>
+<strong>Qalin</strong>
+
+<!-- div — guruhlashtirish -->
+<div>
+  <h2>Maqola sarlavhasi</h2>
+  <p>Maqola matni. Bu <span>so'z</span> ajratildi.</p>
+  <p>Muallif: <strong>Jasur</strong></p>
+</div>
+
+<!-- span — matn ichida -->
+<p>Narx: <span>150 000</span> so'm</p>
+<p>Status: <span>Faol</span></p>`,
+          },
+          liveEditorDefault: `<!-- Blok elementlar -->
+<div>Blok 1</div>
+<div>Blok 2</div>
+<div>Blok 3</div>
+
+<hr>
+
+<!-- Inline elementlar bir qatorda turadi -->
+<span>Inline 1</span>
+<span>Inline 2</span>
+<span>Inline 3</span>
+
+<hr>
+
+<!-- Amaliy misol -->
+<p>
+  Men <strong>HTML</strong> o'rganmoqdaman.
+  Bu <span>juda qiziqarli</span> va foydali.
+</p>`,
+          notes: [
+            "Inline element ichiga blok element joylashtirish HTML xatosi: <code>&lt;span&gt;&lt;div&gt;...&lt;/div&gt;&lt;/span&gt;</code>.",
+            "CSS <code>display</code> xususiyati bilan blok elementni inline ga o'zgartirish mumkin va aksincha.",
+          ],
+          commonMistakes: [
+            "<code>&lt;a&gt;</code> yoki <code>&lt;span&gt;</code> ichiga <code>&lt;div&gt;</code> yoki <code>&lt;p&gt;</code> joylashtirish",
+            "<code>&lt;p&gt;</code> ichiga <code>&lt;p&gt;</code> joylashtirish — bu noto'g'ri",
+          ],
+          practiceTask: "Mahsulot kartochkasini div va span yordamida yarating: rasm, sarlavha, narx (span bilan), tugma.",
+          quiz: [
+            {
+              question: "Qaysi element inline hisoblanadi?",
+              options: ["<code>&lt;div&gt;</code>", "<code>&lt;p&gt;</code>", "<code>&lt;span&gt;</code>", "<code>&lt;section&gt;</code>"],
+              correct: 2,
+              explanation: "<code>&lt;span&gt;</code> — inline element, matn oqimida joylashadi.",
+            },
+            {
+              question: "Blok element qanday kenglikni egallaydi?",
+              options: ["Kontent kengligini", "Faqat 100px", "Mavjud kenglikning to'liq enini", "Belgilangan o'lchamni"],
+              correct: 2,
+              explanation: "Blok element standart holda parent elementning to'liq kengligini egallaydi.",
+            },
+          ],
+        },
+        {
+          id: "html-div-layout",
+          slug: "div-maket",
+          title: "div bilan maket yaratish",
+          description: "div teglari yordamida sahifa tuzilishini loyihalash",
+          sections: [
+            { id: "header-footer", title: "Header va Footer" },
+            { id: "sidebar-main", title: "Sidebar va Main" },
+            { id: "grid-karta", title: "Karta tuzilishi" },
+          ],
+          content: `
+<h1>div bilan maket yaratish</h1>
+<p>CSS o'rganishdan oldin ham div larning qanday joylashishini tushunish muhim. Bu darsda faqat HTML tuzilishi bilan cheklanamiz.</p>
+
+<h2 id="header-footer">Klassik sahifa tuzilishi</h2>
+<p>Har qanday saytning asosiy tuzilishi:</p>
+<ul>
+  <li><strong>Header</strong> — logo, navigatsiya</li>
+  <li><strong>Main content</strong> — asosiy kontent</li>
+  <li><strong>Sidebar</strong> — qo'shimcha menyu</li>
+  <li><strong>Footer</strong> — mualliflik, aloqa</li>
+</ul>
+
+<h2 id="sidebar-main">Ikki ustunli tuzilish</h2>
+<p>Ko'p saytlarda sidebar + main content kombinatsiyasi ishlatiladi. HTML tuzilishi semantik elementlar bilan ham, div lardan foydalanib ham yaratiladi.</p>
+
+<h2 id="grid-karta">Karta (Card) tuzilishi</h2>
+<p>Zamonaviy saytlarda kartochkalar juda keng qo'llaniladi: mahsulot kartasi, blog maqola kartasi, foydalanuvchi profil kartasi.</p>
+          `,
+          codeExample: {
+            title: "To'liq sahifa maket tuzilishi",
+            language: "html",
+            code: `<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8" />
+  <title>Sahifa Maketi</title>
+</head>
+<body>
+
+  <!-- Bosh qism -->
+  <div id="header">
+    <div id="logo">MyShop</div>
+    <div id="nav">
+      <a href="#">Bosh sahifa</a>
+      <a href="#">Mahsulotlar</a>
+      <a href="#">Aloqa</a>
+    </div>
+  </div>
+
+  <!-- Asosiy qism -->
+  <div id="wrapper">
+
+    <!-- Sidebar -->
+    <div id="sidebar">
+      <h3>Kategoriyalar</h3>
+      <ul>
+        <li><a href="#">Elektronika</a></li>
+        <li><a href="#">Kiyim</a></li>
+        <li><a href="#">Oziq-ovqat</a></li>
+      </ul>
+    </div>
+
+    <!-- Asosiy kontent -->
+    <div id="main">
+      <h2>Mahsulotlar</h2>
+
+      <!-- Mahsulot kartochkalari -->
+      <div class="card">
+        <img src="phone.jpg" alt="Telefon" />
+        <h3>Smartphone X</h3>
+        <p>Eng yangi model</p>
+        <span class="price">2 500 000 so'm</span>
+        <button>Savatga qo'shish</button>
+      </div>
+
+      <div class="card">
+        <img src="laptop.jpg" alt="Noutbuk" />
+        <h3>Laptop Pro</h3>
+        <p>Ishchi noutbuk</p>
+        <span class="price">8 000 000 so'm</span>
+        <button>Savatga qo'shish</button>
+      </div>
+    </div>
+
+  </div><!-- /#wrapper -->
+
+  <!-- Alt qism -->
+  <div id="footer">
+    <p>&copy; 2024 MyShop. Barcha huquqlar himoyalangan.</p>
+  </div>
+
+</body>
+</html>`,
+          },
+          liveEditorDefault: `<div id="header">
+  <strong>Logo</strong>
+  <nav>
+    <a href="#">Bosh sahifa</a> |
+    <a href="#">Haqimda</a> |
+    <a href="#">Aloqa</a>
+  </nav>
+</div>
+
+<hr>
+
+<div id="main">
+  <h2>Xush kelibsiz!</h2>
+  <p>Bu asosiy kontent joyi.</p>
+
+  <!-- Kartochkalar -->
+  <div class="card">
+    <h3>Mahsulot 1</h3>
+    <p>Tavsif...</p>
+    <button>Ko'rish</button>
+  </div>
+</div>
+
+<hr>
+
+<div id="footer">
+  <p>&copy; 2024 Sayt nomi</p>
+</div>`,
+          notes: [
+            "Semantik elementlar mavjud bo'lsa, div o'rniga ularni ishlating: <code>&lt;header&gt;</code>, <code>&lt;main&gt;</code>, <code>&lt;footer&gt;</code>.",
+            "div ga yaxshi <code>id</code> yoki <code>class</code> nom bering — kelajakda CSS yozishda yordam beradi.",
+          ],
+          commonMistakes: [
+            "Juda ko'p div ichida div — 'div soup' deyiladi, kodni murakkablashtiradi",
+            "id va class ni tartibsiz nomlash",
+          ],
+          practiceTask: "Internet-do'kon sahifasi HTML tuzilishini yarating: header (logo + nav), 3 ta mahsulot kartochkasi, footer.",
+          quiz: [
+            {
+              question: "HTML tuzilishida 'card' (kartochka) odatda qaysi element bilan yaratiladi?",
+              options: ["<code>&lt;card&gt;</code>", "<code>&lt;div&gt;</code>", "<code>&lt;span&gt;</code>", "<code>&lt;section&gt;</code>"],
+              correct: 1,
+              explanation: "HTML da maxsus card tegi yo'q, shuning uchun div ishlatiladi va CSS bilan karta ko'rinishi beriladi.",
+            },
+          ],
+        },
+      ],
+    },
+    {
+      title: "Kengaytirilgan formalar",
+      lessons: [
+        {
+          id: "html-input-types",
+          slug: "input-turlari",
+          title: "Input turlari (batafsil)",
+          description: "HTML5 ning barcha input turlari va ularning atributlari",
+          sections: [
+            { id: "matn-inputlar", title: "Matn inputlar" },
+            { id: "tanlov-inputlar", title: "Tanlov inputlar" },
+            { id: "media-inputlar", title: "Sana va media inputlar" },
+            { id: "validatsiya", title: "HTML5 validatsiyasi" },
+          ],
+          content: `
+<h1>HTML5 Input Turlari</h1>
+<p>HTML5 da input ning 20 dan ortiq turi mavjud. To'g'ri <code>type</code> ni tanlash foydalanuvchi tajribasini yaxshilaydi va mobil klaviaturani o'zgartiradi.</p>
+
+<h2 id="matn-inputlar">Matn turlari</h2>
+<ul>
+  <li><code>type="text"</code> — oddiy bir qatorli matn</li>
+  <li><code>type="email"</code> — email format tekshiruvi bilan</li>
+  <li><code>type="password"</code> — yashirin matn</li>
+  <li><code>type="tel"</code> — telefon raqami (mobilda raqam klaviaturasi)</li>
+  <li><code>type="url"</code> — URL manzil (https:// tekshiruvi)</li>
+  <li><code>type="search"</code> — qidiruv (tozalash tugmasi bilan)</li>
+  <li><code>type="number"</code> — raqam (<code>min</code>, <code>max</code>, <code>step</code>)</li>
+  <li><code>type="textarea"</code> — ko'p qatorli (bu alohida teg: <code>&lt;textarea&gt;</code>)</li>
+</ul>
+
+<h2 id="tanlov-inputlar">Tanlov turlari</h2>
+<ul>
+  <li><code>type="checkbox"</code> — bir nechta tanlov</li>
+  <li><code>type="radio"</code> — bitta tanlov (bir name guruhida)</li>
+  <li><code>&lt;select&gt;</code> — dropdown ro'yxat</li>
+  <li><code>&lt;datalist&gt;</code> — avtoto'ldirish ro'yxati</li>
+</ul>
+
+<h2 id="media-inputlar">Maxsus turlari</h2>
+<ul>
+  <li><code>type="date"</code> — sana tanlash</li>
+  <li><code>type="time"</code> — vaqt tanlash</li>
+  <li><code>type="datetime-local"</code> — sana + vaqt</li>
+  <li><code>type="month"</code> — oy tanlash</li>
+  <li><code>type="week"</code> — hafta tanlash</li>
+  <li><code>type="color"</code> — rang tanlash</li>
+  <li><code>type="range"</code> — slayder</li>
+  <li><code>type="file"</code> — fayl yuklash</li>
+  <li><code>type="hidden"</code> — yashirin maydon</li>
+</ul>
+
+<h2 id="validatsiya">HTML5 validatsiya atributlari</h2>
+<ul>
+  <li><code>required</code> — majburiy maydon</li>
+  <li><code>minlength</code> / <code>maxlength</code> — belgi soni</li>
+  <li><code>min</code> / <code>max</code> — raqam oralig'i</li>
+  <li><code>pattern</code> — regex namuna</li>
+  <li><code>step</code> — qadam (range va number uchun)</li>
+  <li><code>disabled</code> — o'chirilgan</li>
+  <li><code>readonly</code> — faqat o'qish</li>
+  <li><code>placeholder</code> — maslahat matn</li>
+  <li><code>autocomplete</code> — brauzer avtoto'ldirishi</li>
+  <li><code>autofocus</code> — sahifa ochilganda fokus</li>
+  <li><code>multiple</code> — bir nechta qiymat (file, email)</li>
+</ul>
+          `,
+          codeExample: {
+            title: "Barcha input turlari",
+            language: "html",
+            code: `<form>
+  <!-- Matn -->
+  <label for="ism">Ism:</label>
+  <input type="text" id="ism" name="ism"
+         minlength="2" maxlength="50"
+         placeholder="Jasur" required />
+
+  <!-- Email -->
+  <label for="email">Email:</label>
+  <input type="email" id="email" name="email"
+         placeholder="jasur@example.com" required />
+
+  <!-- Telefon -->
+  <label for="tel">Telefon:</label>
+  <input type="tel" id="tel" name="tel"
+         pattern="[+][0-9]{12}"
+         placeholder="+998901234567" />
+
+  <!-- Raqam -->
+  <label for="yosh">Yosh:</label>
+  <input type="number" id="yosh" name="yosh"
+         min="1" max="120" step="1" value="25" />
+
+  <!-- Slayder -->
+  <label for="ball">Ball (1-10):</label>
+  <input type="range" id="ball" name="ball"
+         min="1" max="10" step="1" value="5" />
+
+  <!-- Rang -->
+  <label for="rang">Sevimli rang:</label>
+  <input type="color" id="rang" name="rang" value="#2563eb" />
+
+  <!-- Sana -->
+  <label for="tug">Tug'ilgan sana:</label>
+  <input type="date" id="tug" name="tug"
+         min="1900-01-01" max="2010-12-31" />
+
+  <!-- Fayl -->
+  <label for="rasm">Rasm yuklash:</label>
+  <input type="file" id="rasm" name="rasm"
+         accept="image/*" multiple />
+
+  <!-- Checkbox -->
+  <label>
+    <input type="checkbox" name="shartlar" required />
+    Foydalanish shartlariga roziman
+  </label>
+
+  <!-- Radio -->
+  <fieldset>
+    <legend>Jinsi:</legend>
+    <label><input type="radio" name="jins" value="erkak" /> Erkak</label>
+    <label><input type="radio" name="jins" value="ayol" /> Ayol</label>
+  </fieldset>
+
+  <!-- Select -->
+  <label for="shahar">Shahar:</label>
+  <select id="shahar" name="shahar">
+    <option value="">Tanlang...</option>
+    <optgroup label="Viloyatlar">
+      <option value="toshkent">Toshkent</option>
+      <option value="samarqand">Samarqand</option>
+      <option value="buxoro">Buxoro</option>
+    </optgroup>
+  </select>
+
+  <!-- Datalist (avtoto'ldirish) -->
+  <label for="til">Dasturlash tili:</label>
+  <input type="text" id="til" name="til"
+         list="tillar" placeholder="Tanlang yoki yozing" />
+  <datalist id="tillar">
+    <option value="JavaScript" />
+    <option value="Python" />
+    <option value="TypeScript" />
+    <option value="Rust" />
+  </datalist>
+
+  <!-- Textarea -->
+  <label for="xabar">Xabar:</label>
+  <textarea id="xabar" name="xabar"
+            rows="4" cols="50"
+            placeholder="Xabaringizni yozing..."
+            maxlength="500"></textarea>
+
+  <button type="submit">Yuborish</button>
+  <button type="reset">Tozalash</button>
+</form>`,
+          },
+          liveEditorDefault: `<form>
+  <p>
+    <label for="ism">Ism:</label><br>
+    <input type="text" id="ism" placeholder="Ismingiz" required>
+  </p>
+  <p>
+    <label for="yosh">Yosh:</label><br>
+    <input type="number" id="yosh" min="1" max="100" value="20">
+  </p>
+  <p>
+    <label for="rang">Rang:</label>
+    <input type="color" id="rang" value="#2563eb">
+  </p>
+  <p>
+    <label for="ball">Ball:</label>
+    <input type="range" id="ball" min="1" max="10">
+  </p>
+  <p>
+    <label for="sana">Sana:</label><br>
+    <input type="date" id="sana">
+  </p>
+  <p>
+    <label><input type="checkbox"> Roziman</label>
+  </p>
+  <p>
+    <label><input type="radio" name="j" value="e"> Erkak</label>
+    <label><input type="radio" name="j" value="a"> Ayol</label>
+  </p>
+  <button type="submit">Yuborish</button>
+</form>`,
+          notes: [
+            "Mobil qurilmalarda <code>type='email'</code> @ belgisi bo'lgan klaviatura, <code>type='tel'</code> esa raqamli klaviatura ochadi.",
+            "<code>pattern</code> atributi regulyar ifoda qabul qiladi va server tekshiruvini almashtirmaydi.",
+          ],
+          commonMistakes: [
+            "Barcha input uchun <code>type='text'</code> ishlatish — to'g'ri typeni ishlatish UX va validatsiyani yaxshilaydi",
+            "<code>name</code> atributsiz input — formada yuborilmaydi",
+          ],
+          practiceTask: "Ro'yxatdan o'tish formasini yarating: ism, familiya, email, parol, tug'ilgan sana, shahar (select), shartlar (checkbox). Barcha kerakli validatsiya atributlarini qo'shing.",
+          quiz: [
+            {
+              question: "Mobil qurilmada raqamli klaviatura ochish uchun qaysi type ishlatiladi?",
+              options: ['type="text"', 'type="number"', 'type="tel"', 'type="keyboard"'],
+              correct: 2,
+              explanation: 'type="tel" mobil qurilmada raqamli telefon klaviaturasini ochadi.',
+            },
+            {
+              question: "Formada yuborilishi uchun input da qaysi atribut bo'lishi shart?",
+              options: ["id", "class", "name", "placeholder"],
+              correct: 2,
+              explanation: "name atributsiz input forma yuborilganda server ga kelmaydi.",
+            },
+          ],
+        },
+        {
+          id: "html-select-textarea",
+          slug: "select-textarea",
+          title: "Select, Textarea va Fieldset",
+          description: "Murakkab forma elementlari va guruhlash",
+          sections: [
+            { id: "select", title: "Select va Option" },
+            { id: "textarea", title: "Textarea" },
+            { id: "fieldset", title: "Fieldset va Legend" },
+          ],
+          content: `
+<h1>Select, Textarea va Fieldset</h1>
+<p>Formaning murakkab elementlarini chuqurroq o'rganamiz.</p>
+
+<h2 id="select">Select va Option</h2>
+<p><code>&lt;select&gt;</code> — ro'yxatdan tanlov elementi. Muhim atributlar:</p>
+<ul>
+  <li><code>multiple</code> — bir nechta tanlash (Ctrl bosib)</li>
+  <li><code>size</code> — bir vaqtda ko'rinadigan elementlar soni</li>
+  <li><code>disabled</code> — o'chirilgan</li>
+</ul>
+<p><code>&lt;option&gt;</code> atributlari:</p>
+<ul>
+  <li><code>value</code> — serverga yuboriladigan qiymat</li>
+  <li><code>selected</code> — standart tanlangan</li>
+  <li><code>disabled</code> — tanlash mumkin emas</li>
+</ul>
+<p><code>&lt;optgroup&gt;</code> — optionlarni guruhlash (label bilan)</p>
+
+<h2 id="textarea">Textarea</h2>
+<p>Ko'p qatorli matn kiritish uchun. Muhim atributlar:</p>
+<ul>
+  <li><code>rows</code> — balandlik (qatorlar soni)</li>
+  <li><code>cols</code> — kengligi (belgilar)</li>
+  <li><code>maxlength</code> — maksimal belgi soni</li>
+  <li><code>resize</code> — CSS da foydalanuvchi o'lchamini o'zgartirishi</li>
+  <li><code>wrap</code> — qator uzish (<code>hard</code> yoki <code>soft</code>)</li>
+</ul>
+
+<h2 id="fieldset">Fieldset va Legend</h2>
+<p><code>&lt;fieldset&gt;</code> — forma elementlarini mantiqiy guruhlashtiradi, chegara chizadi.</p>
+<p><code>&lt;legend&gt;</code> — fieldset ning sarlavhasi, chegarada ko'rinadi.</p>
+          `,
+          codeExample: {
+            title: "Select, Textarea, Fieldset",
+            language: "html",
+            code: `<form>
+  <!-- Oddiy select -->
+  <label for="davlat">Davlat:</label>
+  <select id="davlat" name="davlat" required>
+    <option value="" disabled selected>Tanlang...</option>
+    <optgroup label="Markaziy Osiyo">
+      <option value="uz">O'zbekiston</option>
+      <option value="kz">Qozog'iston</option>
+      <option value="kg">Qirg'iziston</option>
+    </optgroup>
+    <optgroup label="Yaqin mamlakатlar">
+      <option value="ru">Rossiya</option>
+      <option value="tr">Turkiya</option>
+    </optgroup>
+  </select>
+
+  <!-- Ko'p tanlov -->
+  <label for="tillar">Tillar (Ctrl + bosib tanlang):</label>
+  <select id="tillar" name="tillar" multiple size="4">
+    <option value="html">HTML</option>
+    <option value="css">CSS</option>
+    <option value="js" selected>JavaScript</option>
+    <option value="python">Python</option>
+  </select>
+
+  <!-- Textarea -->
+  <label for="bio">O'zingiz haqingizda:</label>
+  <textarea
+    id="bio"
+    name="bio"
+    rows="5"
+    maxlength="300"
+    placeholder="Qisqacha ma'lumot..."
+  ></textarea>
+
+  <!-- Fieldset bilan guruhlash -->
+  <fieldset>
+    <legend>Aloqa ma'lumotlari</legend>
+    <label for="tel">Telefon:</label>
+    <input type="tel" id="tel" name="tel" />
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email" />
+  </fieldset>
+
+  <fieldset>
+    <legend>Bilim darajasi</legend>
+    <label><input type="radio" name="daraja" value="boshlang'ich"> Boshlang'ich</label>
+    <label><input type="radio" name="daraja" value="orta"> O'rta</label>
+    <label><input type="radio" name="daraja" value="yuqori"> Yuqori</label>
+  </fieldset>
+
+  <button type="submit">Saqlash</button>
+</form>`,
+          },
+          liveEditorDefault: `<form>
+  <fieldset>
+    <legend>Shaxsiy ma'lumotlar</legend>
+    <label for="ism">Ism:</label><br>
+    <input type="text" id="ism" placeholder="Ismingiz"><br><br>
+
+    <label for="shahar">Shahar:</label><br>
+    <select id="shahar">
+      <option value="">Tanlang...</option>
+      <optgroup label="Viloyatlar">
+        <option>Toshkent</option>
+        <option>Samarqand</option>
+        <option>Buxoro</option>
+        <option>Namangan</option>
+      </optgroup>
+    </select>
+  </fieldset>
+
+  <br>
+
+  <fieldset>
+    <legend>Xabar</legend>
+    <textarea rows="4" placeholder="Xabaringiz..." style="width:100%"></textarea>
+  </fieldset>
+
+  <br>
+  <button type="submit">Yuborish</button>
+</form>`,
+          notes: [
+            "<code>&lt;textarea&gt;</code> ning ichidagi bo'sh joy va yangi qatorlar ham qiymat sifatida yuboriladi.",
+            "<code>fieldset disabled</code> qo'yilsa, ichidagi barcha elementlar ham o'chiriladi.",
+          ],
+          commonMistakes: [
+            "<code>&lt;textarea&gt;</code> ning value si <code>value</code> atributida emas, teg ichidagi matnda bo'ladi",
+            "<code>&lt;select&gt;</code> uchun default qiymat <code>selected</code> atributi bilan beriladi",
+          ],
+          practiceTask: "Sayohat anketa formasini yarating: ism, yo'nalish (select, optgroup bilan), sana, nechi kishi (number), qo'shimcha xohishlar (textarea), fieldset bilan guruhlang.",
+          quiz: [
+            {
+              question: "Select da bir nechta variantni tanlash imkonini beruvchi atribut?",
+              options: ["multi", "multiple", "multiselect", "many"],
+              correct: 1,
+              explanation: "multiple atributi select elementida bir nechta variantni Ctrl bosib tanlash imkonini beradi.",
+            },
+          ],
+        },
+      ],
+    },
+    {
+      title: "Kengaytirilgan mavzular",
+      lessons: [
+        {
+          id: "html-meta-tags",
+          slug: "meta-teglar",
+          title: "Meta teglar (to'liq)",
+          description: "Head bo'limidagi barcha muhim meta teglar",
+          sections: [
+            { id: "asosiy-meta", title: "Asosiy meta teglar" },
+            { id: "viewport", title: "Viewport" },
+            { id: "og-twitter", title: "Open Graph va Twitter Card" },
+          ],
+          content: `
+<h1>Meta teglar — to'liq qo'llanma</h1>
+<p><code>&lt;head&gt;</code> bo'limi sahifa haqidagi meta-ma'lumotlarni saqlaydi. Bu ma'lumotlar ekranda ko'rinmasa-da, brauzer, qidiruv tizimlari va ijtimoiy tarmoqlar uchun juda muhim.</p>
+
+<h2 id="asosiy-meta">Asosiy meta teglar</h2>
+<ul>
+  <li><code>&lt;meta charset="UTF-8"&gt;</code> — belgilar kodlashi (majburiy)</li>
+  <li><code>&lt;title&gt;</code> — sahifa sarlavhasi (majburiy, 50-60 belgi)</li>
+  <li><code>&lt;meta name="description"&gt;</code> — tavsif (120-160 belgi)</li>
+  <li><code>&lt;meta name="keywords"&gt;</code> — kalit so'zlar (hozir kam ahamiyatli)</li>
+  <li><code>&lt;meta name="author"&gt;</code> — muallif</li>
+  <li><code>&lt;meta name="robots"&gt;</code> — qidiruv boti ko'rsatmasi</li>
+  <li><code>&lt;link rel="canonical"&gt;</code> — asosiy URL (duplikat uchun)</li>
+  <li><code>&lt;link rel="icon"&gt;</code> — favicon</li>
+  <li><code>&lt;link rel="stylesheet"&gt;</code> — CSS fayl</li>
+</ul>
+
+<h2 id="viewport">Viewport — mobil uchun muhim</h2>
+<p>Bu teg bo'lmasa, mobil qurilmalar sahifani kichraytirib ko'rsatadi:</p>
+<ul>
+  <li><code>width=device-width</code> — qurilma kengligiga moslashtiradi</li>
+  <li><code>initial-scale=1.0</code> — boshlang'ich zoom 100%</li>
+  <li><code>maximum-scale=1.0</code> — foydalanuvchi zoom qila olmaydi (tavsiya etilmaydi)</li>
+</ul>
+
+<h2 id="og-twitter">Open Graph va Twitter Card</h2>
+<p>Telegram, Facebook, Twitter, WhatsApp da sahifa ulashilganda preview ko'rsatadi:</p>
+<ul>
+  <li><code>og:title</code> — sarlavha</li>
+  <li><code>og:description</code> — tavsif</li>
+  <li><code>og:image</code> — rasm (1200×630 px tavsiya etiladi)</li>
+  <li><code>og:url</code> — sahifa URL si</li>
+  <li><code>og:type</code> — tur (website, article, video)</li>
+  <li><code>twitter:card</code> — summary yoki summary_large_image</li>
+</ul>
+          `,
+          codeExample: {
+            title: "To'liq head bo'limi",
+            language: "html",
+            code: `<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <!-- Kodlash — birinchi bo'lishi kerak -->
+  <meta charset="UTF-8" />
+
+  <!-- Mobil uchun -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Asosiy SEO -->
+  <title>HTML Kursi | Learner.uz — O'zbek tilida dasturlash</title>
+  <meta name="description"
+    content="HTML ni o'zbek tilida bepul o'rganing. Interaktiv darslar,
+    jonli muharrir va quizlar bilan. Learner.uz da hoziroq boshlang!" />
+  <meta name="author" content="Learner.uz jamoasi" />
+  <meta name="robots" content="index, follow" />
+
+  <!-- Canonical URL -->
+  <link rel="canonical" href="https://learner.uz/kurs/html" />
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="/favicon.png" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+
+  <!-- Open Graph (Telegram, Facebook) -->
+  <meta property="og:title" content="HTML Kursi | Learner.uz" />
+  <meta property="og:description"
+    content="HTML ni o'zbek tilida bepul o'rganing" />
+  <meta property="og:image" content="https://learner.uz/og/html-kurs.png" />
+  <meta property="og:url" content="https://learner.uz/kurs/html" />
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="uz_UZ" />
+  <meta property="og:site_name" content="Learner.uz" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="HTML Kursi | Learner.uz" />
+  <meta name="twitter:description"
+    content="HTML ni o'zbek tilida bepul o'rganing" />
+  <meta name="twitter:image"
+    content="https://learner.uz/og/html-kurs.png" />
+  <meta name="twitter:site" content="@learneruz" />
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="style.css" />
+
+  <!-- Preload muhim resurslar -->
+  <link rel="preload" href="/fonts/inter.woff2" as="font"
+        type="font/woff2" crossorigin />
+</head>
+<body>
+  <!-- Kontent -->
+</body>
+</html>`,
+          },
+          liveEditorDefault: `<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mening Saytim | Learner.uz</title>
+  <meta name="description" content="Bu mening birinchi HTML sahifam.">
+  <meta name="author" content="Jasur Toshmatov">
+  <meta property="og:title" content="Mening Saytim">
+  <meta property="og:description" content="Bu mening birinchi HTML sahifam.">
+</head>
+<body>
+  <h1>Salom!</h1>
+  <p>Head bo'limidagi meta teglarni tekshiring.</p>
+</body>
+</html>`,
+          notes: [
+            "og:image uchun tavsiya etilgan o'lcham: <strong>1200×630 px</strong> — Telegram va Facebook da yaxshi ko'rinadi.",
+            "<code>robots: noindex</code> qo'yilsa, sahifa Google da ko'rinmaydi — ehtiyot bo'ling.",
+          ],
+          commonMistakes: [
+            "charset ni head ning birinchi elementiga qo'ymaslik — xarflar buzilishi mumkin",
+            "Viewport meta tegini unutish — mobil da sahifa kichik ko'rinadi",
+          ],
+          practiceTask: "Xayoliy mahsulot sahifasi uchun to'liq head yozing: SEO meta teglar, Open Graph, Twitter Card, favicon va viewport.",
+          quiz: [
+            {
+              question: "Open Graph og:image uchun tavsiya etilgan o'lcham?",
+              options: ["800×600", "1200×630", "500×500", "1920×1080"],
+              correct: 1,
+              explanation: "1200×630 px — ijtimoiy tarmoqlar uchun standart og:image o'lchami.",
+            },
+            {
+              question: "Qaysi meta teg mobil qurilmalarda to'g'ri ko'rsatish uchun kerak?",
+              options: ["meta charset", "meta mobile", "meta viewport", "meta responsive"],
+              correct: 2,
+              explanation: "meta viewport tegi mobil qurilmalarda sahifaning to'g'ri masshtabda ko'rsatilishini ta'minlaydi.",
+            },
+          ],
+        },
+        {
+          id: "html-special-elements",
+          slug: "maxsus-elementlar",
+          title: "Maxsus elementlar",
+          description: "details, summary, dialog, progress, meter, template",
+          sections: [
+            { id: "details-summary", title: "Details va Summary" },
+            { id: "progress-meter", title: "Progress va Meter" },
+            { id: "dialog", title: "Dialog" },
+          ],
+          content: `
+<h1>HTML5 Maxsus Elementlar</h1>
+<p>HTML5 da JavaScript siz ham interaktivlik yaratishga imkon beruvchi bir nechta maxsus elementlar mavjud.</p>
+
+<h2 id="details-summary">Details va Summary</h2>
+<p><code>&lt;details&gt;</code> — bosish bilan ochiladi/yopiladi (accordion). JavaScript siz ishlaydi.</p>
+<p><code>&lt;summary&gt;</code> — details ning sarlavhasi, har doim ko'rinadi.</p>
+<p><code>open</code> atributi qo'shilsa, standart ochiq holda ko'rsatiladi.</p>
+
+<h2 id="progress-meter">Progress va Meter</h2>
+<p><code>&lt;progress&gt;</code> — ish bajarilish jarayoni (0 dan max gacha).</p>
+<ul>
+  <li><code>value</code> — joriy qiymat</li>
+  <li><code>max</code> — maksimal qiymat</li>
+  <li>value yo'q bo'lsa — animatsiyali "noma'lum" holat</li>
+</ul>
+<p><code>&lt;meter&gt;</code> — o'lchanadigan qiymat (foiz, sig'im, reyting). Semantik jihatdan progress dan farq qiladi:</p>
+<ul>
+  <li><code>min</code>, <code>max</code> — chegara</li>
+  <li><code>low</code>, <code>high</code>, <code>optimum</code> — rang o'zgarishi uchun</li>
+</ul>
+
+<h2 id="dialog">Dialog</h2>
+<p><code>&lt;dialog&gt;</code> — brauzer tomonidan qo'llab-quvvatlanadigan modal oyna. <code>open</code> atributi yoki JavaScript ning <code>showModal()</code> metodi bilan ochiladi.</p>
+          `,
+          codeExample: {
+            title: "Maxsus elementlar",
+            language: "html",
+            code: `<!-- Details / Summary (accordion) -->
+<details>
+  <summary>HTML nima? (bosing)</summary>
+  <p>HTML — HyperText Markup Language. Veb-sahifalar yaratish uchun
+  ishlatiladigan belgilash tili.</p>
+</details>
+
+<details open>
+  <summary>Bu standart ochiq</summary>
+  <p>open atributi bilan standart ochiq bo'ladi.</p>
+</details>
+
+<!-- Progress -->
+<label for="yuklanish">Yuklanish:</label>
+<progress id="yuklanish" value="65" max="100">65%</progress>
+
+<label for="noma">Kutilmoqda:</label>
+<progress id="noma">Yuklanmoqda...</progress>
+
+<!-- Meter -->
+<label for="disk">Disk hajmi:</label>
+<meter id="disk" value="7" min="0" max="10"
+       low="3" high="8" optimum="5">
+  7/10 GB
+</meter>
+
+<label for="ball">Reyting:</label>
+<meter id="ball" value="0.8" min="0" max="1">80%</meter>
+
+<!-- Dialog -->
+<dialog id="modal">
+  <h2>Tasdiqlash</h2>
+  <p>O'chirishni tasdiqlaysizmi?</p>
+  <button onclick="document.getElementById('modal').close()">
+    Bekor qilish
+  </button>
+  <button>Tasdiqlash</button>
+</dialog>
+
+<button onclick="document.getElementById('modal').showModal()">
+  Modal ochish
+</button>`,
+          },
+          liveEditorDefault: `<h2>Details / Summary</h2>
+<details>
+  <summary>HTML haqida bilasizmi?</summary>
+  <p>HTML — veb sahifalar yaratish uchun ishlatiladigan belgilash tili.</p>
+  <p>1991 yilda Tim Berners-Lee tomonidan ixtiro qilingan.</p>
+</details>
+
+<details>
+  <summary>CSS nima?</summary>
+  <p>CSS — Cascading Style Sheets. HTML ga ko'rinish beradi.</p>
+</details>
+
+<hr>
+
+<h2>Progress</h2>
+<label>Kurs bajarilishi:</label><br>
+<progress value="45" max="100"></progress> 45%
+
+<hr>
+
+<h2>Meter</h2>
+<label>Disk:</label>
+<meter value="6" min="0" max="10" low="3" high="8">6GB</meter>`,
+          notes: [
+            "<code>&lt;details&gt;</code> CSS accordion ga muqobil — JavaScript talab qilmaydi.",
+            "<code>&lt;meter&gt;</code> va <code>&lt;progress&gt;</code> brauzer tomonidan stil beriladi, CSS bilan to'liq boshqarish qiyin.",
+          ],
+          commonMistakes: [
+            "<code>&lt;progress&gt;</code> va <code>&lt;meter&gt;</code> ni aralash ishlatish — progress jarayon uchun, meter esa o'lchanadigan qiymat uchun",
+          ],
+          practiceTask: "FAQ (Ko'p so'raladigan savollar) sahifasini details/summary yordamida yarating — 5 ta savol-javob. Kurs taraqqiyotini progress bilan ko'rsating.",
+          quiz: [
+            {
+              question: "details elementi standart holda qanday ko'rinadi?",
+              options: ["Ochiq", "Yopiq", "Yarim ochiq", "Ko'rinmaydi"],
+              correct: 1,
+              explanation: "details elementi standart holda yopiq — foydalanuvchi bosishi bilan ochiladi. open atributi bilan ochiq qilish mumkin.",
+            },
+          ],
+        },
+        {
+          id: "html-picture-figure",
+          slug: "rasm-batafsil",
+          title: "Rasmlar — chuqurroq",
+          description: "picture, figure, figcaption, srcset va responsive rasmlar",
+          sections: [
+            { id: "figure-figcaption", title: "Figure va Figcaption" },
+            { id: "picture", title: "Picture elementi" },
+            { id: "srcset", title: "srcset va sizes" },
+          ],
+          content: `
+<h1>Rasmlar — chuqurroq o'rganish</h1>
+<p>Oddiy <code>&lt;img&gt;</code> dan tashqari HTML5 da rasmlarni yanada samarali ishlatish uchun qo'shimcha elementlar mavjud.</p>
+
+<h2 id="figure-figcaption">Figure va Figcaption</h2>
+<p><code>&lt;figure&gt;</code> — rasm, diagram, kod yoki boshqa mustaqil media uchun semantik konteyner.</p>
+<p><code>&lt;figcaption&gt;</code> — figurega izoh yozish. Figure ichida birinchi yoki oxirgi element bo'lishi kerak.</p>
+
+<h2 id="picture">Picture elementi</h2>
+<p><code>&lt;picture&gt;</code> — responsive rasmlar uchun. Turli qurilmalarda turli rasm ko'rsatadi:</p>
+<ul>
+  <li>Mobilda kichik, kompyuterda katta rasm</li>
+  <li>WebP formatini qo'llab-quvvatlaydigan brauzerlarga WebP, qolganlariga JPEG</li>
+</ul>
+<p><code>&lt;source&gt;</code> — shart ko'rsatiladi. Birinchi mos kelgani ishlatiladi.</p>
+<p><code>&lt;img&gt;</code> — fallback, picture ichida majburiy.</p>
+
+<h2 id="srcset">srcset va sizes</h2>
+<p><code>srcset</code> — ekran zichligiga qarab rasm tanlash:</p>
+<ul>
+  <li><code>rasm.jpg 1x</code> — oddiy ekran</li>
+  <li><code>rasm@2x.jpg 2x</code> — Retina/HiDPI ekran</li>
+  <li><code>rasm-400w.jpg 400w</code> — kengligi 400px bo'lganda</li>
+</ul>
+          `,
+          codeExample: {
+            title: "Picture, Figure, srcset",
+            language: "html",
+            code: `<!-- Figure va figcaption -->
+<figure>
+  <img src="https://picsum.photos/600/400"
+       alt="Tog' manzarasi" />
+  <figcaption>
+    Tog' manzarasi — Tian-Shan tog' tizmasi, 2024-yil
+  </figcaption>
+</figure>
+
+<!-- Kod uchun figure -->
+<figure>
+  <pre><code>&lt;h1&gt;Salom, Dunyo!&lt;/h1&gt;</code></pre>
+  <figcaption>HTML da birinchi sarlavha</figcaption>
+</figure>
+
+<!-- Picture elementi — responsive -->
+<picture>
+  <!-- WebP format (zamonaviy brauzerlar) -->
+  <source srcset="rasm.webp" type="image/webp" />
+  <!-- AVIF format (eng yangi) -->
+  <source srcset="rasm.avif" type="image/avif" />
+  <!-- Fallback JPEG -->
+  <img src="rasm.jpg" alt="Manzara" width="800" height="600" />
+</picture>
+
+<!-- Media shart bilan -->
+<picture>
+  <source
+    media="(max-width: 600px)"
+    srcset="rasm-mobil.jpg"
+  />
+  <source
+    media="(max-width: 1024px)"
+    srcset="rasm-tablet.jpg"
+  />
+  <img src="rasm-desktop.jpg"
+       alt="Rasm"
+       width="1200"
+       height="800" />
+</picture>
+
+<!-- srcset — Retina uchun -->
+<img
+  src="logo.png"
+  srcset="logo.png 1x, logo@2x.png 2x, logo@3x.png 3x"
+  alt="Logo"
+  width="150"
+  height="50"
+/>`,
+          },
+          liveEditorDefault: `<figure>
+  <img
+    src="https://picsum.photos/600/300"
+    alt="Chiroyli tabiat manzarasi"
+    width="600"
+    height="300"
+  />
+  <figcaption>
+    Chiroyli tabiat manzarasi — Picsum Photos
+  </figcaption>
+</figure>
+
+<figure>
+  <img
+    src="https://picsum.photos/200/200"
+    alt="Portret"
+    width="200"
+    height="200"
+  />
+  <figcaption>
+    Shaxs portreti
+  </figcaption>
+</figure>`,
+          notes: [
+            "<code>&lt;picture&gt;</code> ichida <code>&lt;img&gt;</code> majburiy — u fallback va alt matnni o'z ichiga oladi.",
+            "WebP format JPEG/PNG dan 25-34% kichikroq — ishlash tezligini oshiradi.",
+          ],
+          commonMistakes: [
+            "figure ni faqat rasm uchun deb bilish — diagram, jadval, kod ham figure ichida bo'lishi mumkin",
+            "picture ichida img bo'lmasa, rasm ko'rinmaydi",
+          ],
+          practiceTask: "3 ta rasmdan iborat galeriya yarating: har birini figure va figcaption bilan o'rang. Biriga picture elementi qo'shib, mobil va desktop uchun turli rasm ko'rsating.",
+          quiz: [
+            {
+              question: "picture elementi ichida fallback rasm sifatida qaysi teg majburiy?",
+              options: ["<code>&lt;source&gt;</code>", "<code>&lt;img&gt;</code>", "<code>&lt;video&gt;</code>", "<code>&lt;embed&gt;</code>"],
+              correct: 1,
+              explanation: "picture ichida img majburiy — u fallback rasm va alt matnni o'z ichiga oladi. source lar mos kelmasa img ko'rsatiladi.",
+            },
+          ],
+        },
+        {
+          id: "html-tables-advanced",
+          slug: "jadvallar-chuqur",
+          title: "Jadvallar — chuqurroq",
+          description: "caption, colgroup, scope, murakkab jadval tuzilishi",
+          sections: [
+            { id: "caption", title: "Caption va semantika" },
+            { id: "colgroup", title: "Colgroup va Col" },
+            { id: "scope", title: "Scope atributi" },
+          ],
+          content: `
+<h1>Jadvallar — chuqurroq</h1>
+<p>Oddiy jadval elementlaridan tashqari, accessibility va semantika uchun muhim bo'lgan qo'shimcha elementlarni o'rganamiz.</p>
+
+<h2 id="caption">Caption — jadval sarlavhasi</h2>
+<p><code>&lt;caption&gt;</code> — jadvalning sarlavhasi. Table ning birinchi elementi bo'lishi kerak. SEO va accessibility uchun muhim.</p>
+
+<h2 id="colgroup">Colgroup va Col</h2>
+<p><code>&lt;colgroup&gt;</code> — ustunlarni guruhlash. <code>&lt;col&gt;</code> — bitta ustun. CSS bilan butun ustunni bir xil stillashtirish uchun ishlatiladi.</p>
+<p><code>span</code> atributi nechta ustunni qamrab olishini bildiradi.</p>
+
+<h2 id="scope">Scope atributi</h2>
+<p>th elementiga qo'shiladi — qaysi ma'lumotlar uchun sarlavha ekanligini bildiradi:</p>
+<ul>
+  <li><code>scope="col"</code> — ustun sarlavhasi</li>
+  <li><code>scope="row"</code> — qator sarlavhasi</li>
+  <li><code>scope="colgroup"</code> — ustunlar guruhi sarlavhasi</li>
+  <li><code>scope="rowgroup"</code> — qatorlar guruhi sarlavhasi</li>
+</ul>
+          `,
+          codeExample: {
+            title: "To'liq semantic jadval",
+            language: "html",
+            code: `<table border="1">
+  <!-- Jadval sarlavhasi -->
+  <caption>2024-yil dasturlash tillari reytingi</caption>
+
+  <!-- Ustun guruhlari -->
+  <colgroup>
+    <col span="1" />
+    <col span="2" />
+    <col span="1" />
+  </colgroup>
+
+  <!-- Jadval boshi -->
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Dasturlash tili</th>
+      <th scope="col">Turi</th>
+      <th scope="col">Mashhurlik</th>
+    </tr>
+  </thead>
+
+  <!-- Jadval asosi -->
+  <tbody>
+    <tr>
+      <th scope="row">1</th>
+      <td>JavaScript</td>
+      <td>Web, Backend, Mobile</td>
+      <td>95%</td>
+    </tr>
+    <tr>
+      <th scope="row">2</th>
+      <td>Python</td>
+      <td>AI, Data, Backend</td>
+      <td>90%</td>
+    </tr>
+    <tr>
+      <th scope="row">3</th>
+      <td>TypeScript</td>
+      <td>Web, Enterprise</td>
+      <td>82%</td>
+    </tr>
+  </tbody>
+
+  <!-- Jadval osti -->
+  <tfoot>
+    <tr>
+      <td colspan="3">Manba: Stack Overflow Survey 2024</td>
+      <td>O'rtacha: 89%</td>
+    </tr>
+  </tfoot>
+</table>
+
+<!-- colspan va rowspan -->
+<table border="1">
+  <caption>Dars jadvali</caption>
+  <thead>
+    <tr>
+      <th scope="col">Vaqt</th>
+      <th scope="col">Dushanba</th>
+      <th scope="col">Seshanba</th>
+      <th scope="col">Chorshanba</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">9:00</th>
+      <td colspan="2">Matematika (2 kun)</td>
+      <td>Fizika</td>
+    </tr>
+    <tr>
+      <th scope="row">11:00</th>
+      <td>HTML</td>
+      <td rowspan="2">CSS (2 soat)</td>
+      <td>JavaScript</td>
+    </tr>
+    <tr>
+      <th scope="row">13:00</th>
+      <td>Tushlik</td>
+      <td>Tushlik</td>
+    </tr>
+  </tbody>
+</table>`,
+          },
+          liveEditorDefault: `<table border="1">
+  <caption>O'quvchilar reytingi</caption>
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Ism</th>
+      <th scope="col">HTML</th>
+      <th scope="col">CSS</th>
+      <th scope="col">Jami</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">1</th>
+      <td>Jasur</td>
+      <td>95</td>
+      <td>88</td>
+      <td>183</td>
+    </tr>
+    <tr>
+      <th scope="row">2</th>
+      <td>Malika</td>
+      <td>90</td>
+      <td>92</td>
+      <td>182</td>
+    </tr>
+    <tr>
+      <th scope="row">3</th>
+      <td>Bobur</td>
+      <td>85</td>
+      <td>80</td>
+      <td>165</td>
+    </tr>
+  </tbody>
+  <tfoot>
+    <tr>
+      <td colspan="4">O'rtacha ball:</td>
+      <td>177</td>
+    </tr>
+  </tfoot>
+</table>`,
+          notes: [
+            "<code>scope</code> atributi screen-reader larning jadvallarni to'g'ri o'qishiga yordam beradi.",
+            "<code>&lt;tfoot&gt;</code> HTML da <code>&lt;tbody&gt;</code> dan oldin yozilishi mumkin, lekin brauzer ekranda pastda ko'rsatadi.",
+          ],
+          commonMistakes: [
+            "colspan/rowspan ni noto'g'ri hisoblash — jadval buziladi",
+            "caption ni jadval ichiga emas, tashqarisiga yozish",
+          ],
+          practiceTask: "Haftalik dars jadvali yarating: 5 kun, 6 soat. colspan va rowspan ishlatib, ba'zi fanlar bir necha soat/kun davom etsin. caption va scope qo'shing.",
+          quiz: [
+            {
+              question: "th da scope='row' nimani bildiradi?",
+              options: ["Ustun sarlavhasi", "Qator sarlavhasi", "Jadval sarlavhasi", "Guruh sarlavhasi"],
+              correct: 1,
+              explanation: "scope='row' — bu th o'z qatoridagi td lar uchun sarlavha ekanligini bildiradi. Screen-readerlar uchun muhim.",
+            },
+          ],
+        },
+        {
+          id: "html-links-advanced",
+          slug: "havolalar-chuqur",
+          title: "Havolalar — chuqurroq",
+          description: "rel atributlari, anchor, download va boshqalar",
+          sections: [
+            { id: "rel-atributlar", title: "rel atributlari" },
+            { id: "anchor", title: "Sahifa ichida anchor" },
+            { id: "download", title: "Download havola" },
+          ],
+          content: `
+<h1>Havolalar — chuqurroq</h1>
+<p>Oddiy <code>href</code> va <code>target</code> dan tashqari havolalarning ko'plab muhim xususiyatlari mavjud.</p>
+
+<h2 id="rel-atributlar">rel atributlari</h2>
+<p><code>rel</code> — joriy sahifa va havola o'rtasidagi munosabatni bildiradi:</p>
+<ul>
+  <li><code>rel="noopener"</code> — yangi tabda ochiladigan havolalar uchun xavfsizlik</li>
+  <li><code>rel="noreferrer"</code> — Referrer headerini yubormaslik</li>
+  <li><code>rel="nofollow"</code> — qidiruv botilarига bu havolani kuzatmaslikni aytadi</li>
+  <li><code>rel="sponsored"</code> — reklama havola</li>
+  <li><code>rel="ugc"</code> — foydalanuvchi yaratgan kontent</li>
+  <li><code>rel="me"</code> — o'zingizning boshqa profil</li>
+  <li><code>rel="prev"</code> / <code>rel="next"</code> — sahifalash uchun</li>
+</ul>
+
+<h2 id="anchor">Anchor havolalar</h2>
+<p>Sahifa ichidagi bo'limlarga o'tish. Boshqa sahifadagi anchorgа ham o'tish mumkin: <code>haqimda.html#tajriba</code></p>
+<p>Smooth scroll uchun CSS: <code>html { scroll-behavior: smooth; }</code></p>
+
+<h2 id="download">Download va boshqalar</h2>
+<ul>
+  <li><code>download</code> — fayl yuklab olish (fayl nomini ham belgilash mumkin)</li>
+  <li><code>hreflang</code> — havola qilingan sahifa tili</li>
+  <li><code>type</code> — havola qilingan resurs turi (<code>type="application/pdf"</code>)</li>
+  <li><code>ping</code> — bosish hodisasini tracking URL ga yuboradi</li>
+</ul>
+          `,
+          codeExample: {
+            title: "Havola turlari — batafsil",
+            language: "html",
+            code: `<!-- Xavfsiz tashqi havola -->
+<a href="https://google.com"
+   target="_blank"
+   rel="noopener noreferrer">
+  Google (xavfsiz)
+</a>
+
+<!-- Nofollow — reklamali havola -->
+<a href="https://partner.com"
+   rel="nofollow sponsored">
+  Hamkorlar saytimiz
+</a>
+
+<!-- Anchor — sahifa ichida -->
+<nav>
+  <a href="#kirish">Kirish</a>
+  <a href="#mavzular">Mavzular</a>
+  <a href="#aloqa">Aloqa</a>
+</nav>
+
+<section id="kirish">
+  <h2>Kirish</h2>
+  <p>...</p>
+</section>
+
+<!-- Boshqa sahifadagi anchor -->
+<a href="kurs.html#dars-5">5-darsga o'tish</a>
+
+<!-- Fayl yuklab olish -->
+<a href="/fayllar/kurs.pdf" download>
+  PDF yuklab olish
+</a>
+
+<!-- Fayl nomini belgilash -->
+<a href="/fayllar/resume-2024.pdf"
+   download="Jasur_Toshmatov_CV.pdf">
+  CV yuklab olish
+</a>
+
+<!-- Email — subject va body bilan -->
+<a href="mailto:info@learner.uz?subject=Savol&body=Salom!">
+  Email yuborish
+</a>
+
+<!-- WhatsApp havola -->
+<a href="https://wa.me/998901234567?text=Salom!"
+   rel="noopener noreferrer"
+   target="_blank">
+  WhatsApp da yozing
+</a>
+
+<!-- Telefon -->
+<a href="tel:+998901234567">+998 90 123 45 67</a>
+
+<!-- PDF ni yangi tabda ochish -->
+<a href="/doc.pdf"
+   target="_blank"
+   rel="noopener"
+   type="application/pdf">
+  Hujjatni ko'rish (PDF)
+</a>`,
+          },
+          liveEditorDefault: `<h2>Havola turlari</h2>
+
+<p>
+  <a href="https://learner.uz" target="_blank" rel="noopener noreferrer">
+    Learner.uz (yangi tabda)
+  </a>
+</p>
+
+<p>
+  <a href="mailto:test@example.com?subject=Salom&body=Xabarim bor">
+    Email yuborish
+  </a>
+</p>
+
+<p>
+  <a href="tel:+998901234567">+998 90 123 45 67</a>
+</p>
+
+<h3>Sahifa ichida</h3>
+<p><a href="#pastga">Pastga tushish</a></p>
+
+<br><br><br><br><br><br>
+<div id="pastga">
+  <p>Mana bu yerga keldingiz!</p>
+  <a href="#">Yuqoriga qaytish</a>
+</div>`,
+          notes: [
+            "<code>target='_blank'</code> bilan doim <code>rel='noopener noreferrer'</code> yozing — xavfsizlik uchun.",
+            "<code>download</code> atributi faqat bir xil domen (same-origin) fayllari uchun ishlaydi.",
+          ],
+          commonMistakes: [
+            "target='_blank' da rel='noopener' unutilsa, yangi tab joriy sahifani window.opener orqali boshqarishi mumkin",
+            "Anchor id da bo'sh joy ishlatish — href='#mening boshliğim' ishlamaydi",
+          ],
+          practiceTask: "Navigatsiya yarating: 4 ta bo'lim uchun anchor havolalar. Tashqi saytga noopener bilan havola. CV ni download qilish tugmasi. Email va telefon havolalari.",
+          quiz: [
+            {
+              question: "target='_blank' bilan birga qaysi rel qiymatlari kerak?",
+              options: ["nofollow", "noopener noreferrer", "sponsored", "me"],
+              correct: 1,
+              explanation: "noopener noreferrer — yangi tabda ochiladigan havolalar uchun xavfsizlik. noopener window.opener ga kirishni bloklaydi.",
+            },
+          ],
+        },
+        {
+          id: "html-emmet",
+          slug: "emmet",
+          title: "Emmet — tez kod yozish",
+          description: "VS Code da Emmet abbrevationlari bilan HTML ni tez yozish",
+          sections: [
+            { id: "nima-emmet", title: "Emmet nima?" },
+            { id: "asosiy-sintaksis", title: "Asosiy sintaksis" },
+            { id: "qisqartmalar", title: "Foydali qisqartmalar" },
+          ],
+          content: `
+<h1>Emmet — tez kod yozish vositasi</h1>
+<p>Emmet — HTML va CSS ni juda tez yozishga yordam beruvchi vosita. VS Code, WebStorm va boshqa redaktorlarda o'rnatilgan bo'ladi. Tab bosib kengaytiradi.</p>
+
+<h2 id="nima-emmet">Emmet nima?</h2>
+<p>Qisqa ifoda yozasiz → Tab bosasiz → To'liq HTML kengayadi. Masalan:</p>
+<ul>
+  <li><code>div</code> → <code>&lt;div&gt;&lt;/div&gt;</code></li>
+  <li><code>h1</code> → <code>&lt;h1&gt;&lt;/h1&gt;</code></li>
+  <li><code>!</code> → To'liq HTML5 tuzilishi</li>
+</ul>
+
+<h2 id="asosiy-sintaksis">Asosiy sintaksis</h2>
+<ul>
+  <li><code>div&gt;p</code> — div ichida p (child)</li>
+  <li><code>div+p</code> — div dan keyin p (sibling)</li>
+  <li><code>div*3</code> — 3 ta div</li>
+  <li><code>ul&gt;li*5</code> — 5 ta li bo'lgan ul</li>
+  <li><code>div.klass</code> — class bilan div</li>
+  <li><code>div#id</code> — id bilan div</li>
+  <li><code>div.a.b.c</code> — bir nechta class</li>
+  <li><code>a[href="#"]</code> — atribut bilan</li>
+  <li><code>p{Matn}</code> — kontent bilan</li>
+  <li><code>div*3&gt;h2{Sarlavha $}+p{Matn $}</code> — $ raqam</li>
+  <li><code>(div&gt;h2+p)*3</code> — qavslar bilan guruh</li>
+</ul>
+
+<h2 id="qisqartmalar">Muhim qisqartmalar</h2>
+<ul>
+  <li><code>!</code> — to'liq HTML5 shablon</li>
+  <li><code>a:link</code> → <code>&lt;a href=""&gt;&lt;/a&gt;</code></li>
+  <li><code>img</code> → <code>&lt;img src="" alt="" /&gt;</code></li>
+  <li><code>inp</code> → <code>&lt;input type="text" /&gt;</code></li>
+  <li><code>form:post</code> → <code>&lt;form action="" method="post"&gt;</code></li>
+  <li><code>link:css</code> → CSS fayl ulash</li>
+  <li><code>script:src</code> → JS fayl ulash</li>
+  <li><code>meta:vp</code> → viewport meta</li>
+</ul>
+          `,
+          codeExample: {
+            title: "Emmet misollari — kengaytirilgan natija",
+            language: "html",
+            code: `<!-- ! → yoziladi -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Document</title>
+</head>
+<body>
+
+</body>
+</html>
+
+<!-- nav>ul>li*4>a[href="#"]{Menyu $} yoziladi -->
+<nav>
+  <ul>
+    <li><a href="#">Menyu 1</a></li>
+    <li><a href="#">Menyu 2</a></li>
+    <li><a href="#">Menyu 3</a></li>
+    <li><a href="#">Menyu 4</a></li>
+  </ul>
+</nav>
+
+<!-- .card*3>img+h3{Sarlavha $}+p{Tavsif}+a.btn[href="#"]{Ko'rish}
+     yoziladi -->
+<div class="card">
+  <img src="" alt="" />
+  <h3>Sarlavha 1</h3>
+  <p>Tavsif</p>
+  <a href="#" class="btn">Ko'rish</a>
+</div>
+<div class="card">
+  <img src="" alt="" />
+  <h3>Sarlavha 2</h3>
+  <p>Tavsif</p>
+  <a href="#" class="btn">Ko'rish</a>
+</div>
+<div class="card">
+  <img src="" alt="" />
+  <h3>Sarlavha 3</h3>
+  <p>Tavsif</p>
+  <a href="#" class="btn">Ko'rish</a>
+</div>
+
+<!-- form>label+input[type="email" placeholder="Email"]+button{Yuborish}
+     yoziladi -->
+<form>
+  <label></label>
+  <input type="email" placeholder="Email" />
+  <button>Yuborish</button>
+</form>
+
+<!-- table>thead>tr>th*4^tbody>tr*3>td*4 yoziladi -->
+<table>
+  <thead>
+    <tr>
+      <th></th><th></th><th></th><th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td></td><td></td><td></td><td></td></tr>
+    <tr><td></td><td></td><td></td><td></td></tr>
+    <tr><td></td><td></td><td></td><td></td></tr>
+  </tbody>
+</table>`,
+          },
+          liveEditorDefault: `<!-- Emmet natijasi — qo'lda yozilgan -->
+<header>
+  <nav>
+    <ul>
+      <li><a href="#">Bosh sahifa</a></li>
+      <li><a href="#">Blog</a></li>
+      <li><a href="#">Portfolio</a></li>
+      <li><a href="#">Aloqa</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main>
+  <div class="card">
+    <h2>Karta 1</h2>
+    <p>Tavsif matni</p>
+    <a href="#">Ko'rish</a>
+  </div>
+  <div class="card">
+    <h2>Karta 2</h2>
+    <p>Tavsif matni</p>
+    <a href="#">Ko'rish</a>
+  </div>
+</main>`,
+          notes: [
+            "Emmet VS Code da o'rnatilgan — hech nima yuklamasdan ishlaydi.",
+            "Emmet qisqartmalarini eslab qolmasangiz ham, <code>div.klass</code> va <code>ul&gt;li*5</code> ni bilsangiz yetarli.",
+          ],
+          commonMistakes: [
+            "Emmet da bo'sh joy qo'yish — bo'sh joy ifodani tugatadi, Tab bosguncha bo'sh joy bo'lmasin",
+          ],
+          practiceTask: "Emmet bilan quyidagilarni yozing: 1) To'liq HTML shablon (!). 2) 5 ta li li bo'lgan nav. 3) 4 ta karta (div.card>img+h3+p+a). 4) 3 ustun 4 qatorli jadval.",
+          quiz: [
+            {
+              question: "Emmet da 3 ta div yaratish uchun qaysi qisqartma ishlatiladi?",
+              options: ["div x3", "div.3", "div*3", "3>div"],
+              correct: 2,
+              explanation: "div*3 — ko'paytirish operatori * bilan 3 ta div yaratiladi.",
+            },
+            {
+              question: "Emmet da child element yaratish uchun qaysi belgi ishlatiladi?",
+              options: ["+", ">", "^", "*"],
+              correct: 1,
+              explanation: "> — child (ichiga joylash) operatori: div>p — div ichida p yaratadi.",
+            },
+          ],
+        },
+        {
+          id: "html-character-encoding",
+          slug: "kodlash",
+          title: "Belgilar kodlashi va Unicode",
+          description: "UTF-8, Unicode, maxsus belgilar va emoji HTML da",
+          sections: [
+            { id: "utf8", title: "UTF-8 nima?" },
+            { id: "unicode-entities", title: "Unicode va Entitylar" },
+            { id: "emoji", title: "Emoji HTML da" },
+          ],
+          content: `
+<h1>Belgilar kodlashi va Unicode</h1>
+<p>Veb-sahifalarda barcha dunyo tillarining belgilari, maxsus simbollar va emoji to'g'ri ko'rsatilishi uchun kodlashni tushunish kerak.</p>
+
+<h2 id="utf8">UTF-8 nima?</h2>
+<p>UTF-8 — Unicode Transformation Format, 8-bit. Dunyo bo'yicha barcha belgilarni qamrab oluvchi standart kodlash. Bitta belgi 1-4 bayt joy egallaydi:</p>
+<ul>
+  <li>Lotin harflari — 1 bayt (ASCII bilan mos)</li>
+  <li>Ko'p Yevropa tillari — 2 bayt</li>
+  <li>O'zbek, Arab, Xitoy harflari — 3 bayt</li>
+  <li>Emoji — 4 bayt</li>
+</ul>
+<p>HTML5 da standart kodlash UTF-8. Shuning uchun <code>&lt;meta charset="UTF-8"&gt;</code> doim yozing!</p>
+
+<h2 id="unicode-entities">Unicode va Named Entitylar</h2>
+<p>Maxsus belgilarni 3 usulda yozish mumkin:</p>
+<ul>
+  <li><strong>Named entity:</strong> <code>&amp;copy;</code> → ©</li>
+  <li><strong>Decimal entity:</strong> <code>&amp;#169;</code> → ©</li>
+  <li><strong>Hex entity:</strong> <code>&amp;#xa9;</code> → ©</li>
+</ul>
+<p>Muhim entitylar ro'yxati:</p>
+<ul>
+  <li><code>&amp;nbsp;</code> — uzilmaydigan bo'sh joy (non-breaking space)</li>
+  <li><code>&amp;shy;</code> — yumshoq defis (uziq kerak bo'lsa)</li>
+  <li><code>&amp;mdash;</code> → — (uzun tire)</li>
+  <li><code>&amp;ndash;</code> → – (o'rta tire)</li>
+  <li><code>&amp;laquo;</code> → « (qo'shtirnoq chap)</li>
+  <li><code>&amp;raquo;</code> → » (qo'shtirnoq o'ng)</li>
+  <li><code>&amp;hellip;</code> → … (uch nuqta)</li>
+  <li><code>&amp;times;</code> → × (ko'paytirish)</li>
+  <li><code>&amp;divide;</code> → ÷ (bo'lish)</li>
+  <li><code>&amp;plusmn;</code> → ± (plus-minus)</li>
+  <li><code>&amp;infin;</code> → ∞ (cheksizlik)</li>
+  <li><code>&amp;deg;</code> → ° (daraja)</li>
+  <li><code>&amp;micro;</code> → µ (mikro)</li>
+</ul>
+
+<h2 id="emoji">Emoji HTML da</h2>
+<p>UTF-8 bilan barcha emoji to'g'ridan-to'g'ri HTML ga yozish mumkin. Yoki Unicode kod bilan:</p>
+<ul>
+  <li><code>&amp;#x1F600;</code> → 😀</li>
+  <li><code>&amp;#x2764;</code> → ❤</li>
+  <li><code>&amp;#x1F680;</code> → 🚀</li>
+</ul>
+          `,
+          codeExample: {
+            title: "Entitylar va maxsus belgilar",
+            language: "html",
+            code: `<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8" />
+  <title>Belgilar</title>
+</head>
+<body>
+
+  <!-- Matematik belgilar -->
+  <p>2 &times; 3 = 6</p>
+  <p>10 &divide; 2 = 5</p>
+  <p>Temperatura: 36.6&deg;C</p>
+  <p>Xatolik: &plusmn;0.5</p>
+  <p>Cheksiz: &infin;</p>
+
+  <!-- Pul birliklari -->
+  <p>Narx: 150&nbsp;000 so'm</p>
+  <p>&euro;50 | &pound;40 | &#x20B8;450</p>
+
+  <!-- Tire turlari -->
+  <p>2020&ndash;2024-yillar</p>
+  <p>HTML &mdash; veb tillarning asosi</p>
+
+  <!-- Qo'shtirnoq -->
+  <p>&laquo;Bilim &mdash; kuch&raquo;</p>
+
+  <!-- O'zbek harflari (UTF-8 bilan to'g'ridan-to'g'ri) -->
+  <p>O'zbek tili: G'alati, o'rganish, qo'shiq</p>
+
+  <!-- Emoji -->
+  <p>Tabriklayman! &#x1F389; &#x1F3C6;</p>
+  <p>O'rganish &#x1F4DA; qiziqarli &#x1F680;</p>
+
+  <!-- HTML tegini ko'rsatish -->
+  <p>&lt;div&gt; tegi blok element.</p>
+  <p>&lt;!-- Bu izoh --&gt;</p>
+
+</body>
+</html>`,
+          },
+          liveEditorDefault: `<h2>Maxsus belgilar</h2>
+
+<p>Matematik: 5 &times; 4 = 20 | 20 &divide; 4 = 5</p>
+<p>Temperatura: 37&deg;C &plusmn; 0.5</p>
+<p>Narx: 500&nbsp;000 so'm</p>
+
+<h3>Tireler</h3>
+<p>Dars: 9:00&ndash;10:30</p>
+<p>HTML &mdash; asosiy veb tili</p>
+
+<h3>Iqtibos</h3>
+<p>&laquo;Bilim &mdash; kuch&raquo; &mdash; F. Bekon</p>
+
+<h3>Emoji</h3>
+<p>&#x1F600; &#x1F4DA; &#x1F680; &#x2764; &#x1F3C6;</p>`,
+          notes: [
+            "&amp;nbsp; faqat bo'sh joy uchun emas — so'zlarni birga saqlaydi (masalan: 500&amp;nbsp;000 so'm).",
+            "O'zbek harflarini (o'g'ʼ) to'g'ridan-to'g'ri yozish mumkin — UTF-8 bilan.",
+          ],
+          commonMistakes: [
+            "Entity ni ; (nuqta-vergul) bilan yopishni unutish — &amp;copy yozilsa, brauzer tushunmaydi",
+            "Tire uchun keyboard defisi (-) o'rniga to'g'ri tireni (– yoki —) ishlatmaslik",
+          ],
+          practiceTask: "Matematika darsligi sahifasi yarating: formulalar (&times;, &divide;, &plusmn;, &deg;, &infin;), iqtibos (&laquo;&raquo;), narxlar (non-breaking space bilan).",
+          quiz: [
+            {
+              question: "&amp;nbsp; entitysi nima uchun ishlatiladi?",
+              options: [
+                "Yangi qator uchun",
+                "Uzilmaydigan bo'sh joy — so'zlarni birga saqlaydi",
+                "Bo'sh div uchun",
+                "Paragraf oralig'i uchun",
+              ],
+              correct: 1,
+              explanation: "&amp;nbsp; — non-breaking space. So'zlar orasida qo'yilsa, ular bir qatordan boshqa qatorga ajrab ketmaydi. 500&amp;nbsp;000 so'm deb yoziladi.",
+            },
+          ],
+        },
+        {
+          id: "html-microdata",
+          slug: "mikrodata",
+          title: "Mikrodata va Schema.org",
+          description: "Qidiruv tizimi uchun tuzilgan ma'lumotlar",
+          sections: [
+            { id: "schema-nima", title: "Schema.org nima?" },
+            { id: "microdata", title: "HTML Microdata" },
+            { id: "json-ld", title: "JSON-LD" },
+          ],
+          content: `
+<h1>Mikrodata va Schema.org</h1>
+<p>Qidiruv tizimlari (Google, Yandex) sahifani yaxshiroq tushunishi uchun <strong>tuzilgan ma'lumotlar</strong> (structured data) qo'shish mumkin. Bu Google da "Rich Snippets" ko'rsatilishiga sabab bo'ladi.</p>
+
+<h2 id="schema-nima">Schema.org nima?</h2>
+<p>Schema.org — Google, Microsoft, Yahoo va Yandex birgalikda yaratgan veb-ma'lumotlar lug'ati. Mahsulot, resept, shaxs, tashkilot, hodisa va boshqa turdagi ma'lumotlarni standart formatda belgilaydi.</p>
+<p>Google Rich Snippets misollari:</p>
+<ul>
+  <li>Retsept — tayyorlanish vaqti, kaloriya, reytingi</li>
+  <li>Mahsulot — narx, mavjudligi, reytingi</li>
+  <li>Tashkilot — manzil, telefon, ish vaqti</li>
+  <li>Shaxs — ism, lavozim, ijtimoiy tarmoqlar</li>
+  <li>Hodisa — sana, joy, narx</li>
+</ul>
+
+<h2 id="microdata">HTML Microdata</h2>
+<p>HTML elementlariga <code>itemscope</code>, <code>itemtype</code>, <code>itemprop</code> atributlari qo'shiladi:</p>
+<ul>
+  <li><code>itemscope</code> — bu element Schema ob'ekti</li>
+  <li><code>itemtype</code> — Schema.org URL i</li>
+  <li><code>itemprop</code> — xususiyat nomi</li>
+</ul>
+
+<h2 id="json-ld">JSON-LD (tavsiya etiladi)</h2>
+<p>Google JSON-LD formatini afzal ko'radi. HTML ga tegishli emas, alohida <code>&lt;script&gt;</code> tagida yoziladi — HTML ga aralashmaydi.</p>
+          `,
+          codeExample: {
+            title: "Schema.org — Microdata va JSON-LD",
+            language: "html",
+            code: `<!-- Microdata usuli -->
+<article itemscope itemtype="https://schema.org/Article">
+  <h1 itemprop="headline">HTML o'rganish bo'yicha to'liq qo'llanma</h1>
+  <div itemprop="author" itemscope itemtype="https://schema.org/Person">
+    Muallif: <span itemprop="name">Jasur Toshmatov</span>
+  </div>
+  <time itemprop="datePublished" datetime="2024-01-15">
+    15 yanvar 2024
+  </time>
+  <p itemprop="description">
+    HTML ni noldan o'rganish uchun to'liq qo'llanma.
+  </p>
+</article>
+
+<!-- Mahsulot Microdata -->
+<div itemscope itemtype="https://schema.org/Product">
+  <img itemprop="image" src="telefon.jpg" alt="Telefon" />
+  <h2 itemprop="name">Smartphone X Pro</h2>
+  <p itemprop="description">Eng yangi model, 5G qo'llab-quvvatlaydi</p>
+  <div itemprop="offers" itemscope
+       itemtype="https://schema.org/Offer">
+    <span itemprop="price">2500000</span>
+    <meta itemprop="priceCurrency" content="UZS" />
+    <link itemprop="availability"
+          href="https://schema.org/InStock" />
+    Mavjud
+  </div>
+</div>
+
+<!-- JSON-LD usuli (tavsiya etiladi) -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "Learner.uz",
+  "url": "https://learner.uz",
+  "logo": "https://learner.uz/logo.png",
+  "description": "O'zbek tilida dasturlash o'rgatuvchi platforma",
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Toshkent",
+    "addressCountry": "UZ"
+  },
+  "sameAs": [
+    "https://t.me/learneruz",
+    "https://instagram.com/learneruz"
+  ]
+}
+</script>`,
+          },
+          liveEditorDefault: `<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8">
+  <title>Learner.uz</title>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "Learner.uz",
+    "url": "https://learner.uz",
+    "description": "O'zbek tilida dasturlash kurslari"
+  }
+  </script>
+</head>
+<body>
+
+  <article itemscope itemtype="https://schema.org/Article">
+    <h1 itemprop="headline">HTML Kursi</h1>
+    <p itemprop="description">
+      HTML ni o'zbek tilida o'rganing.
+    </p>
+    <span itemprop="author">Learner.uz</span>
+  </article>
+
+</body>
+</html>`,
+          notes: [
+            "Google Search Console da 'Rich results test' vositasi bilan mikrodata ni tekshiring.",
+            "JSON-LD Microdata dan afzal — HTML ga aralashmaydi, o'qish osonroq.",
+          ],
+          commonMistakes: [
+            "Schema.org URL ni to'liq yozmaslik — https:// bilan boshlash kerak",
+            "Foydalanuvchiga ko'rsatilmaydigan ma'lumot uchun mikrodata qo'shish — Google spam deb hisoblaydi",
+          ],
+          practiceTask: "Xayoliy resept sahifasi yarating: JSON-LD bilan Recipe schema qo'shing (name, description, cookTime, ingredients, steps). Google Rich Results Test orqali tekshiring.",
+          quiz: [
+            {
+              question: "Google qaysi structured data formatini afzal ko'radi?",
+              options: ["Microdata", "RDFa", "JSON-LD", "Meta teglar"],
+              correct: 2,
+              explanation: "Google JSON-LD formatini rasmiy tavsiya qiladi — HTML ga aralashmaydi va saqlash osonroq.",
             },
           ],
         },

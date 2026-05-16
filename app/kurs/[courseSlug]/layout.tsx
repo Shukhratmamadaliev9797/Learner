@@ -45,8 +45,7 @@ function CourseLayoutInner({ children }: { children: React.ReactNode }) {
             animate={{ width: "var(--sidebar-width)", opacity: 1 }}
             exit={{ width: 0, opacity: 0 }}
             transition={{ duration: 0.22, ease: "easeInOut" }}
-            className="hidden md:block shrink-0 h-full border-r overflow-hidden"
-            style={{ borderColor: "var(--border)" }}
+            className="hidden md:block shrink-0 h-full overflow-hidden"
           >
             <Sidebar
               course={course}
