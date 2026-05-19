@@ -33,7 +33,7 @@ export default function RootLayout({
       className={`${interTight.variable} ${dmMono.variable} h-full`}
       suppressHydrationWarning
     >
-      <body className="h-full flex flex-col antialiased overflow-hidden">
+      <body className="h-full flex flex-col antialiased overflow-hidden" suppressHydrationWarning>
         <ThemeProvider>
           <Navbar />
           <div className="flex-1 flex flex-col overflow-hidden">{children}</div>

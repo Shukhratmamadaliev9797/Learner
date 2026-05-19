@@ -1,28 +1,12 @@
 import type { Course } from "@/lib/types";
 import { htmlCourse } from "./html-lessons";
+import { cssCourse } from "./css-lessons";
+import { jsCourse } from "./js-lessons";
 
 export const courses: Course[] = [
   htmlCourse,
-  {
-    id: "css",
-    slug: "css",
-    title: "CSS",
-    description: "Veb-sahifalarni stillash sanati",
-    color: "#264de4",
-    icon: "🎨",
-    available: false,
-    groups: [],
-  },
-  {
-    id: "javascript",
-    slug: "javascript",
-    title: "JavaScript",
-    description: "Veb-sahifalarni interaktiv qilish",
-    color: "#f7df1e",
-    icon: "⚡",
-    available: false,
-    groups: [],
-  },
+  cssCourse,
+  jsCourse,
   {
     id: "typescript",
     slug: "typescript",

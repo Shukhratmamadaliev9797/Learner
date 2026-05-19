@@ -34,6 +34,20 @@ export default function Sidebar({ course, completedLessons }: Props) {
       .filter((g) => g.lessons.length > 0);
   }, [search, course.groups]);
 
+  const orderedGroups = useMemo(() => {
+    const groups = [...filtered];
+    const advancedIndex = groups.findIndex((g) => g.title === "Ilg'or mavzular");
+    const extendedIndex = groups.findIndex((g) => g.title === "Kengaytirilgan mavzular");
+
+    if (advancedIndex === -1 || extendedIndex === -1) return groups;
+
+    const [advancedGroup] = groups.splice(advancedIndex, 1);
+    const insertAt = groups.findIndex((g) => g.title === "Kengaytirilgan mavzular");
+    groups.splice(insertAt + 1, 0, advancedGroup);
+
+    return groups;
+  }, [filtered]);
+
   const totalLessons = course.groups.reduce((acc, g) => acc + g.lessons.length, 0);
   const doneLessons = completedLessons.length;
   const progress = totalLessons > 0 ? (doneLessons / totalLessons) * 100 : 0;
@@ -98,11 +112,11 @@ export default function Sidebar({ course, completedLessons }: Props) {
 
       {/* ── Lesson list ────────────────────── */}
       <nav className="sb-nav" aria-label="Darslar">
-        {filtered.length === 0 && (
+        {orderedGroups.length === 0 && (
           <p className="sb-empty">Topilmadi</p>
         )}
 
-        {filtered.map((group) => {
+        {orderedGroups.map((group) => {
           const isOpen = !collapsed[group.title];
           const groupTotal = group.lessons.length;
           const groupDone = group.lessons.filter((l) =>

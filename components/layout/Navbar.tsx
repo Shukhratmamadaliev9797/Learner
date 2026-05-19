@@ -71,6 +71,22 @@ export default function Navbar() {
             })}
           </div>
 
+          {/* Test link */}
+          <Link
+            href="/test"
+            className={cn("nav-item nav-item--test", pathname.startsWith("/test") && "nav-item--active")}
+            style={{ "--c": "#e34c26", "--bg": "rgba(227,76,38,0.12)" } as React.CSSProperties}
+          >
+            {pathname.startsWith("/test") && (
+              <motion.span
+                layoutId="nav-pill"
+                className="nav-item-pill"
+                transition={{ type: "spring", stiffness: 500, damping: 40 }}
+              />
+            )}
+            <span className="nav-item-label">Test</span>
+          </Link>
+
           {/* Right controls */}
           <div className="nav-controls">
             <motion.button
