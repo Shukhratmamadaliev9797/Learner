@@ -61,7 +61,7 @@ export default function Sidebar({ course, completedLessons }: Props) {
           <div>
             <p className="sb-head-title">{course.title}</p>
             <p className="sb-head-sub">
-              <span style={{ color: "var(--primary)" }}>{doneLessons}</span>
+              <span style={{ color: "var(--sb-accent)" }}>{doneLessons}</span>
               /{totalLessons} bajarildi
             </p>
           </div>
