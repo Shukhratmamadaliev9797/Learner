@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { Moon, Sun, Menu, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
@@ -23,8 +23,29 @@ const COURSE_META: Record<string, { color: string; bg: string }> = {
 
 export default function Navbar() {
   const pathname = usePathname();
+  const router = useRouter();
   const { theme, toggleTheme } = useTheme();
   const [mobileOpen, setMobileOpen] = useState(false);
+
+  const handleTestClick = async (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+
+    const code = window.prompt("Test kodi kiriting:");
+    if (!code) return;
+
+    const res = await fetch("/api/test-access", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ code }),
+    });
+
+    if (!res.ok) {
+      window.alert("Kod noto'g'ri.");
+      return;
+    }
+
+    router.push("/test");
+  };
 
   return (
     <>
@@ -74,6 +95,7 @@ export default function Navbar() {
           {/* Test link */}
           <Link
             href="/test"
+            onClick={handleTestClick}
             className={cn("nav-item nav-item--test", pathname.startsWith("/test") && "nav-item--active")}
             style={{ "--c": "#e34c26", "--bg": "rgba(227,76,38,0.12)" } as React.CSSProperties}
           >
