@@ -41,6 +41,67 @@ export default function TestPage({ questions, title, courseColor }: TestPageProp
     setRevealed(answers[current] !== null);
   }, [current, answers]);
 
+  // Prevent losing progress by accident (tab close, route change, back button)
+  useEffect(() => {
+    if (finished) return;
+
+    const confirmLeave = () =>
+      window.confirm("Test progress saqlanmaydi. Sahifani tark etmoqchimisiz?");
+
+    const handleBeforeUnload = (event: BeforeUnloadEvent) => {
+      event.preventDefault();
+      // Most browsers ignore custom text, but setting returnValue is required to show dialog.
+      event.returnValue = "";
+    };
+
+    const currentUrl = window.location.href;
+    window.history.pushState({ testGuard: true }, "", currentUrl);
+
+    const handleDocumentClick = (event: MouseEvent) => {
+      if (event.defaultPrevented) return;
+      if (event.button !== 0) return;
+      if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+
+      const target = event.target as Element | null;
+      const link = target?.closest("a[href]") as HTMLAnchorElement | null;
+      if (!link) return;
+      if (link.target && link.target !== "_self") return;
+      if (link.hasAttribute("download")) return;
+
+      const href = link.getAttribute("href");
+      if (!href || href.startsWith("#")) return;
+
+      const nextUrl = new URL(link.href, window.location.href);
+      if (nextUrl.href === window.location.href) return;
+
+      if (!confirmLeave()) {
+        event.preventDefault();
+        event.stopPropagation();
+      }
+    };
+
+    const cleanup = () => {
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+      document.removeEventListener("click", handleDocumentClick, true);
+      window.removeEventListener("popstate", handlePopState);
+    };
+
+    const handlePopState = () => {
+      if (confirmLeave()) {
+        cleanup();
+        window.history.back();
+        return;
+      }
+      window.history.pushState({ testGuard: true }, "", currentUrl);
+    };
+
+    window.addEventListener("beforeunload", handleBeforeUnload);
+    document.addEventListener("click", handleDocumentClick, true);
+    window.addEventListener("popstate", handlePopState);
+
+    return cleanup;
+  }, [finished]);
+
   const choose = (idx: number) => {
     if (revealed) return;
     setSelected(idx);
