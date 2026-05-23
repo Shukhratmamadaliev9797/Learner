@@ -2,9 +2,10 @@
 
 import { useState, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { CheckCircle2, XCircle, Clock, ChevronRight, ChevronLeft, Flag } from "lucide-react";
+import { CheckCircle2, XCircle, ChevronRight, ChevronLeft, Flag } from "lucide-react";
 import type { TestQuestion } from "@/data/html-test";
 import TestResult from "./TestResult";
+import CodingQuestion from "./CodingQuestion";
 
 interface TestPageProps {
   questions: TestQuestion[];
@@ -12,33 +13,27 @@ interface TestPageProps {
   courseColor: string;
 }
 
-const TOTAL_TIME = 45 * 60; // 45 minutes in seconds
-
 export default function TestPage({ questions, title, courseColor }: TestPageProps) {
   const [current, setCurrent] = useState(0);
+  // For MCQ: number (chosen index) | null. For coding: -1 (pass) | -2 (fail/shown solution) | null
   const [answers, setAnswers] = useState<(number | null)[]>(Array(questions.length).fill(null));
   const [selected, setSelected] = useState<number | null>(null);
   const [revealed, setRevealed] = useState(false);
-  const [timeLeft, setTimeLeft] = useState(TOTAL_TIME);
   const [finished, setFinished] = useState(false);
   const [flagged, setFlagged] = useState<Set<number>>(new Set());
+  // Persist coding question state across navigation
+  const [codes, setCodes] = useState<string[]>(
+    questions.map((q) => q.starterCode ?? "")
+  );
+  const [submittedResults, setSubmittedResults] = useState<
+    ({ pass: boolean; message: string } | null)[]
+  >(Array(questions.length).fill(null));
 
   const q = questions[current];
 
   const finish = useCallback(() => {
     setFinished(true);
   }, []);
-
-  useEffect(() => {
-    if (finished) return;
-    const id = setInterval(() => {
-      setTimeLeft((t) => {
-        if (t <= 1) { clearInterval(id); finish(); return 0; }
-        return t - 1;
-      });
-    }, 1000);
-    return () => clearInterval(id);
-  }, [finished, finish]);
 
   // Sync selected when navigating
   useEffect(() => {
@@ -53,6 +48,31 @@ export default function TestPage({ questions, title, courseColor }: TestPageProp
     setAnswers((prev) => {
       const next = [...prev];
       next[current] = idx;
+      return next;
+    });
+  };
+
+  const handleCodingAnswer = (pass: boolean, result: { pass: boolean; message: string }) => {
+    setAnswers((prev) => {
+      const next = [...prev];
+      if (next[current] === null || next[current] === -2) {
+        next[current] = pass ? -1 : -2;
+      }
+      return next;
+    });
+    setSubmittedResults((prev) => {
+      const next = [...prev];
+      if (next[current] === null || (next[current] !== null && !next[current]!.pass)) {
+        next[current] = result;
+      }
+      return next;
+    });
+  };
+
+  const handleCodeChange = (idx: number, val: string) => {
+    setCodes((prev) => {
+      const next = [...prev];
+      next[idx] = val;
       return next;
     });
   };
@@ -75,19 +95,25 @@ export default function TestPage({ questions, title, courseColor }: TestPageProp
     });
   };
 
-  const mm = String(Math.floor(timeLeft / 60)).padStart(2, "0");
-  const ss = String(timeLeft % 60).padStart(2, "0");
-  const isLow = timeLeft < 120;
-
   const answeredCount = answers.filter((a) => a !== null).length;
   const progressPct = ((current + 1) / questions.length) * 100;
+
+  const isAnswerCorrect = (i: number) => {
+    const a = answers[i];
+    if (a === null) return null;
+    if (questions[i].type === "kodlash") return a === -1; // -1 = passed
+    return a === questions[i].correct;
+  };
 
   if (finished) {
     return <TestResult questions={questions} answers={answers} courseColor={courseColor} title={title} />;
   }
 
+  const isCoding = q.type === "kodlash";
+  const codingAnswered = isCoding ? answers[current] : null; // -1=pass, -2=fail/shown, null=unanswered
+
   return (
-    <div className="test-root">
+    <div className={`test-root ${isCoding ? "test-root--coding" : ""}`}>
       {/* Header bar */}
       <div className="test-header">
         <div className="test-header-left">
@@ -114,21 +140,14 @@ export default function TestPage({ questions, title, courseColor }: TestPageProp
         </div>
 
         <div className="test-header-right">
-          <div className={`test-timer ${isLow ? "test-timer--low" : ""}`}>
-            <Clock size={14} />
-            <span>{mm}:{ss}</span>
-          </div>
-          <button
-            onClick={finish}
-            className="test-finish-btn"
-          >
+          <button onClick={finish} className="test-finish-btn">
             Tugatish
           </button>
         </div>
       </div>
 
       {/* Question area */}
-      <div className="test-body">
+      <div className={`test-body ${isCoding ? "test-body--coding" : ""}`}>
         <AnimatePresence mode="wait">
           <motion.div
             key={current}
@@ -136,12 +155,12 @@ export default function TestPage({ questions, title, courseColor }: TestPageProp
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: -24 }}
             transition={{ duration: 0.18, ease: "easeOut" }}
-            className="test-question-card"
+            className={`test-question-card ${isCoding ? "test-question-card--coding" : ""}`}
           >
             {/* Question meta */}
             <div className="test-q-meta">
               <span className={`test-type-badge test-type-badge--${q.type}`}>
-                {q.type === "nazariy" ? "Nazariy" : "Amaliy"}
+                {q.type === "nazariy" ? "Nazariy" : q.type === "kodlash" ? "Kodlash" : "Amaliy"}
               </span>
               <span className="test-category">{q.category}</span>
               <button
@@ -156,8 +175,8 @@ export default function TestPage({ questions, title, courseColor }: TestPageProp
             {/* Question text */}
             <h2 className="test-q-text" dangerouslySetInnerHTML={{ __html: q.question }} />
 
-            {/* Code block */}
-            {q.code && (
+            {/* Code block (MCQ only) */}
+            {!isCoding && q.code && (
               <div className="test-code-block">
                 <div className="test-code-dots" aria-hidden>
                   <span /><span /><span />
@@ -166,78 +185,98 @@ export default function TestPage({ questions, title, courseColor }: TestPageProp
               </div>
             )}
 
-            {/* Options */}
-            <div className="test-options">
-              {q.options.map((opt, i) => {
-                const isCorrect = i === q.correct;
-                const isSelected = i === selected;
-                let state: "default" | "correct" | "wrong" | "missed" = "default";
-                if (revealed) {
-                  if (isCorrect) state = "correct";
-                  else if (isSelected && !isCorrect) state = "wrong";
-                }
+            {/* CODING question */}
+            {isCoding && (
+              <CodingQuestion
+                question={q}
+                onAnswer={handleCodingAnswer}
+                answered={codingAnswered === null ? null : codingAnswered === -1}
+                courseColor={courseColor}
+                code={codes[current]}
+                onCodeChange={(val) => handleCodeChange(current, val)}
+                submittedResult={submittedResults[current]}
+              />
+            )}
 
-                return (
-                  <motion.button
-                    key={i}
-                    onClick={() => choose(i)}
-                    className={`test-option test-option--${state}`}
-                    whileHover={!revealed ? { scale: 1.005 } : {}}
-                    whileTap={!revealed ? { scale: 0.998 } : {}}
-                    disabled={revealed}
+            {/* MCQ Options */}
+            {!isCoding && (
+              <div className="test-options">
+                {q.options.map((opt, i) => {
+                  const isCorrect = i === q.correct;
+                  const isSelected = i === selected;
+                  let state: "default" | "correct" | "wrong" | "missed" = "default";
+                  if (revealed) {
+                    if (isCorrect) state = "correct";
+                    else if (isSelected && !isCorrect) state = "wrong";
+                  }
+
+                  return (
+                    <motion.button
+                      key={i}
+                      onClick={() => choose(i)}
+                      className={`test-option test-option--${state}`}
+                      whileHover={!revealed ? { scale: 1.005 } : {}}
+                      whileTap={!revealed ? { scale: 0.998 } : {}}
+                      disabled={revealed}
+                    >
+                      <span className="test-option-letter">
+                        {["A", "B", "C", "D"][i]}
+                      </span>
+                      <span className="test-option-text" dangerouslySetInnerHTML={{ __html: opt }} />
+                      {revealed && state === "correct" && (
+                        <CheckCircle2 size={18} className="test-option-icon test-option-icon--correct" />
+                      )}
+                      {revealed && state === "wrong" && (
+                        <XCircle size={18} className="test-option-icon test-option-icon--wrong" />
+                      )}
+                    </motion.button>
+                  );
+                })}
+              </div>
+            )}
+
+            {/* MCQ Explanation */}
+            {!isCoding && (
+              <AnimatePresence>
+                {revealed && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 8, height: 0 }}
+                    animate={{ opacity: 1, y: 0, height: "auto" }}
+                    exit={{ opacity: 0, y: 8, height: 0 }}
+                    transition={{ duration: 0.22, ease: "easeOut" }}
+                    className={`test-explanation test-explanation--${selected === q.correct ? "correct" : "wrong"}`}
                   >
-                    <span className="test-option-letter">
-                      {["A", "B", "C", "D"][i]}
-                    </span>
-                    <span className="test-option-text" dangerouslySetInnerHTML={{ __html: opt }} />
-                    {revealed && state === "correct" && (
-                      <CheckCircle2 size={18} className="test-option-icon test-option-icon--correct" />
-                    )}
-                    {revealed && state === "wrong" && (
-                      <XCircle size={18} className="test-option-icon test-option-icon--wrong" />
-                    )}
-                  </motion.button>
-                );
-              })}
-            </div>
-
-            {/* Explanation */}
-            <AnimatePresence>
-              {revealed && (
-                <motion.div
-                  initial={{ opacity: 0, y: 8, height: 0 }}
-                  animate={{ opacity: 1, y: 0, height: "auto" }}
-                  exit={{ opacity: 0, y: 8, height: 0 }}
-                  transition={{ duration: 0.22, ease: "easeOut" }}
-                  className={`test-explanation test-explanation--${selected === q.correct ? "correct" : "wrong"}`}
-                >
-                  <strong>{selected === q.correct ? "To'g'ri!" : "Noto'g'ri."}</strong>{" "}
-                  <span dangerouslySetInnerHTML={{ __html: q.explanation }} />
-                </motion.div>
-              )}
-            </AnimatePresence>
+                    <strong>{selected === q.correct ? "To'g'ri!" : "Noto'g'ri."}</strong>{" "}
+                    <span dangerouslySetInnerHTML={{ __html: q.explanation }} />
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            )}
           </motion.div>
         </AnimatePresence>
       </div>
 
       {/* Footer nav */}
       <div className="test-footer">
-        {/* Question dots — mini map */}
+        {/* Question dots */}
         <div className="test-dot-map">
-          {questions.map((_, i) => (
-            <button
-              key={i}
-              onClick={() => setCurrent(i)}
-              className={`test-dot
-                ${i === current ? "test-dot--current" : ""}
-                ${answers[i] !== null && answers[i] === questions[i].correct ? "test-dot--correct" : ""}
-                ${answers[i] !== null && answers[i] !== questions[i].correct ? "test-dot--wrong" : ""}
-                ${flagged.has(i) ? "test-dot--flagged" : ""}
-              `}
-              style={i === current ? { background: courseColor } : {}}
-              aria-label={`Savol ${i + 1}`}
-            />
-          ))}
+          {questions.map((_, i) => {
+            const correct = isAnswerCorrect(i);
+            return (
+              <button
+                key={i}
+                onClick={() => setCurrent(i)}
+                className={`test-dot
+                  ${i === current ? "test-dot--current" : ""}
+                  ${correct === true ? "test-dot--correct" : ""}
+                  ${correct === false ? "test-dot--wrong" : ""}
+                  ${flagged.has(i) ? "test-dot--flagged" : ""}
+                `}
+                style={i === current ? { background: courseColor } : {}}
+                aria-label={`Savol ${i + 1}`}
+              />
+            );
+          })}
         </div>
 
         {/* Prev / Next */}

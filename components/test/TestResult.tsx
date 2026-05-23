@@ -17,9 +17,15 @@ interface CategoryStat {
   correct: number;
 }
 
+function isCorrectAnswer(q: TestQuestion, a: number | null): boolean {
+  if (a === null) return false;
+  if (q.type === "kodlash") return a === -1;
+  return a === q.correct;
+}
+
 export default function TestResult({ questions, answers, courseColor, title }: TestResultProps) {
-  const correct = answers.filter((a, i) => a === questions[i].correct).length;
-  const wrong = answers.filter((a, i) => a !== null && a !== questions[i].correct).length;
+  const correct = answers.filter((a, i) => isCorrectAnswer(questions[i], a)).length;
+  const wrong = answers.filter((a, i) => a !== null && !isCorrectAnswer(questions[i], a)).length;
   const skipped = answers.filter((a) => a === null).length;
   const pct = Math.round((correct / questions.length) * 100);
 
@@ -28,7 +34,7 @@ export default function TestResult({ questions, answers, courseColor, title }: T
   questions.forEach((q, i) => {
     if (!catStats[q.category]) catStats[q.category] = { total: 0, correct: 0 };
     catStats[q.category].total++;
-    if (answers[i] === q.correct) catStats[q.category].correct++;
+    if (isCorrectAnswer(q, answers[i])) catStats[q.category].correct++;
   });
 
   const grade = pct >= 90 ? "A" : pct >= 75 ? "B" : pct >= 60 ? "C" : pct >= 45 ? "D" : "F";
