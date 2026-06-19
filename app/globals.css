@@ -1248,7 +1248,7 @@ body {
   color: #e6edf3;
   border: none;
   outline: none;
-  min-height: 480px;
+  min-height: 650px;
   box-sizing: border-box;
   tab-size: 2;
 }
@@ -1256,7 +1256,7 @@ body {
 .coding-q-iframe {
   display: block;
   width: 100%;
-  min-height: 480px;
+  min-height: 650px;
   height: 100%;
   background: #fff;
   border: none;

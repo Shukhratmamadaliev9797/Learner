@@ -87,7 +87,7 @@ export default function LiveEditor({ defaultCode }: Props) {
       </div>
 
       {/* Editor + Preview */}
-      <div className={`flex ${layout === "stack" ? "flex-col" : "flex-row"}`} style={{ minHeight: 520 }}>
+      <div className={`flex ${layout === "stack" ? "flex-col" : "flex-row"}`} style={{ minHeight: 750 }}>
         {/* Editor pane */}
         <div
           className={`${layout === "stack" ? "w-full" : "w-1/2"} flex flex-col border-r`}
@@ -113,7 +113,7 @@ export default function LiveEditor({ defaultCode }: Props) {
             style={{
               background: "#0f172a",
               color: "#e2e8f0",
-              minHeight: layout === "stack" ? 380 : 480,
+              minHeight: layout === "stack" ? 580 : 680,
             }}
           />
         </div>
@@ -136,7 +136,7 @@ export default function LiveEditor({ defaultCode }: Props) {
             className="flex-1 w-full"
             style={{
               background: "#ffffff",
-              minHeight: layout === "stack" ? 380 : 480,
+              minHeight: layout === "stack" ? 580 : 680,
             }}
             title="HTML natijasi"
           />
